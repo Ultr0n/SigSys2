@@ -1,0 +1,165 @@
+\section*{Aufgabe 1.1}
+
+\subsection*{Angabe}
+ 
+Für das zeitbegrenzte Signal
+	\begin{equation*}
+		x\leftn[n\right] = \left\{\begin{array}{cl} 0, & n<0\\n, & 0\le n\le 10\\0, & n>10 \end{array} \right.
+	\end{equation*}
+zeichnen Sie folgende Signale:
+	\begin{enumerate}[a)] 
+		\item $y\leftn[n\right] = x\leftn[n+5\right]$
+		\item $y\leftn[n\right] = x\leftn[-n+5\right]$
+		\item $y\leftn[n\right] = x\leftn[2n\right]$
+		\item gerades und ungerades Teilsignal von $x\leftn[n\right]$
+		\item $y\leftn[n\right] = x\leftn[n+10\right]+x\leftn[-n+10\right]-10\delta\leftn[n\right]$
+	\end{enumerate}
+
+\subsection*{Lösung}
+Die gegebene Funktion $x\leftn[n\right]$:\\
+\begin{center}
+\resizebox{200pt}{150pt}{%
+	\begin{tikzpicture}
+		\begin{axis}[
+			domain=-10:20,
+			axis x line=bottom,
+			axis y line=middle,
+			ylabel = {$x\leftn[n\right]$},
+			xlabel = $n$,
+       		xtick={-10,-5,...,20},
+			]
+			\addplot+[ycomb,blue,thick,domain=-10:-1,samples=10,mark=o] {0};
+			\addplot+[ycomb,blue,thick,domain=0:10,samples=11,mark=o] {x};
+			\addplot+[ycomb,blue,thick,domain=11:20,samples=10,mark=o] {0};
+			
+			\draw[blue,thick] ({axis cs:10,10}) -- ({axis cs:10,0});
+		\end{axis}
+	\end{tikzpicture}
+}\end{center}\clearpage
+\textbf{a)} $\mathbf{y\leftn[n\right] = x\leftn[n+5\right]}$\\
+\begin{center}
+\resizebox{200pt}{150pt}{%
+	\begin{tikzpicture}
+		\begin{axis}[
+			domain=-10:20,
+			axis x line=bottom,
+			axis y line=middle,
+			ylabel = {$y\leftn[n\right]=x\leftn[n+5\right]$},
+			y label style={at={(-0.1,0.95)}},
+			xlabel = $n$,
+       		xtick={-10,-5,...,20},
+			]
+			\addplot+[ycomb,blue,thick,domain=-10:-6,samples=5,mark=o] {0};
+			\addplot+[ycomb,blue,thick,domain=-5:5,samples=11,mark=o] {x+5};
+			\addplot+[ycomb,blue,thick,domain=6:20,samples=15,mark=o] {0};
+			
+			\draw[blue,thick] ({axis cs:5,10}) -- ({axis cs:5,0});
+		\end{axis}
+	\end{tikzpicture}
+}\end{center}
+\textbf{b)} $\mathbf{y\leftn[n\right] = x\leftn[-n+5\right]}$\\
+\begin{center}
+\resizebox{200pt}{150pt}{%
+	\begin{tikzpicture}
+		\begin{axis}[
+			domain=-10:20,
+			axis x line=bottom,
+			axis y line=middle,
+			ylabel = {$y\leftn[n\right]=x\leftn[-n+5\right]$},
+			xlabel = $n$,
+       		xtick={-10,-5,...,20},
+			]
+			\addplot+[ycomb,blue,thick,domain=-10:-6,samples=5,mark=o] {0};
+			\addplot+[ycomb,blue,thick,domain=-5:5,samples=11,mark=o] {-x+5};
+			\addplot+[ycomb,blue,thick,domain=6:20,samples=15,mark=o] {0};
+			
+			\draw[blue,thick] ({axis cs:-5,10}) -- ({axis cs:-5,0});
+		\end{axis}
+	\end{tikzpicture}
+}\end{center}
+\textbf{c)} $\mathbf{y\leftn[n\right] = x\leftn[2n\right]}$\\
+\begin{center}
+\resizebox{200pt}{150pt}{%
+	\begin{tikzpicture}
+		\begin{axis}[
+			domain=-10:20,
+			axis x line=bottom,
+			axis y line=middle,
+			ylabel = {$y\leftn[n\right]=x\leftn[2n\right]$},
+			y label style={at={(-0.1,1)}},
+			xlabel = $n$,
+       		xtick={-10,-5,...,20},
+			]
+			\addplot+[ycomb,blue,thick,domain=-10:-1,samples=10,mark=o] {0};
+			\addplot+[ycomb,blue,thick,domain=0:5,samples=6,mark=o] {2*x};
+			\addplot+[ycomb,blue,thick,domain=6:20,samples=15,mark=o] {0};
+			
+			\draw[blue,thick] ({axis cs:5,10}) -- ({axis cs:5,0});
+		\end{axis}
+	\end{tikzpicture}
+}
+\end{center}
+\pagebreak
+
+\textbf{d) gerades und ungerades Teilsignal von} $\mathbf{x\leftn[n\right]}$\\
+Für die geraden und ungeraden Teile definieren wir zuerst allgemein:
+\[
+	x\leftn[n\right]=x_g\leftn[n\right]+x_{ug}\leftn[n\right]
+\]
+Nun erhalten wir durch umformen:
+\begin{align*}
+\text{Gerades Signal: } x_g\leftn[n\right]&=\frac{1}{2}\left(x\leftn[n\right]+x\leftn[-n\right]\right), \forall n\\
+\text{Ungerades Signal: } x_u\leftn[n\right]&=\frac{1}{2}\left(x\leftn[n\right]-x\leftn[-n\right]\right), \forall n
+\end{align*}
+Daraus lassen sich nun die geraden und ungeraden Teilsignale berechnen (einfaches Einsetzen):\
+\begin{figure}[!h]	%1.2) d - Gerades Teilsignal
+\centering
+	\begin{tikzpicture}[scale=0.8]
+		\begin{axis}[
+			domain=-10:20,
+			axis x line=bottom,
+			axis y line=middle,
+			ylabel = {$x_g\leftn[n\right]=\frac{1}{2}\left(x\leftn[n\right]+x\leftn[-n\right]\right)$},
+			y label style={at={(0.2,1.2)}},
+			xlabel = $n$,
+       		xtick={-10,-5,...,20},
+			]
+			\addplot+[ycomb,blue,thick,domain=-10:0,samples=11,mark=o] {-x/2};
+			\addplot+[ycomb,blue,thick,domain=1:10,samples=10,mark=o] {x/2};
+		\end{axis}
+	\end{tikzpicture} \caption*{Gerades Teilsignal}
+\end{figure}
+\begin{figure}[!h]	%1.2) d - Ungerades Teilsignal
+\centering
+	\begin{tikzpicture}[scale=0.8]
+		\begin{axis}[
+			domain=-10:20,
+			axis x line=middle,
+			axis y line=middle,
+			ylabel = {$x_u\leftn[n\right]=\frac{1}{2}\left(x\leftn[n\right]-x\leftn[-n\right]\right)$},
+			y label style={at={(0.2,1.2)}},
+			xlabel = $n$,
+       		xtick={-10,-5,...,20},
+			]
+			\addplot+[ycomb,blue,thick,domain=-10:10,samples=21,mark=o] {x/2};
+		\end{axis}
+	\end{tikzpicture} \caption*{Ungerades Teilsignal}
+\end{figure}\clearpage
+\textbf{e)} $\mathbf{y\leftn[n\right] = x\leftn[n+10\right]+x\leftn[-n+10\right]-10\delta \leftn[n\right]}$\\
+\begin{figure}[!h]	%1.2) e - Dreieck
+\centering
+	\begin{tikzpicture}[scale=0.8]
+		\begin{axis}[
+			domain=-10:20,
+			axis x line=middle,
+			axis y line=middle,
+			ylabel = {$x_u\leftn[n\right]=x\leftn[n+10\right]+x\leftn[-n+10\right]-10\delta \leftn[n\right]$},
+			y label style={at={(0,1.2)}},
+			xlabel = $n$,
+       		xtick={-10,-5,...,20},
+			]
+			\addplot+[ycomb,blue,thick,domain=-10:0,samples=11,mark=o] {x+10};
+			\addplot+[ycomb,blue,thick,domain=0:10,samples=11,mark=o] {10-x};
+		\end{axis}
+	\end{tikzpicture}
+\end{figure}

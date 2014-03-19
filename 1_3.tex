@@ -1,0 +1,50 @@
+\section*{Aufgabe 1.3}
+Jedes Signal $x\leftn[n\right]$ kann in ein gerades Signal $x_g\leftn[n\right]$ und in ein ungerades Signal $x_u\leftn[n\right]$ zerlegt werden. Zeigen Sie allgemein, dass
+	\begin{enumerate}[a)]
+		\item das Produkt $x_g\leftn[n\right]x_u\leftn[n\right]$ ein ungerades Signal ist
+			\begin{align*}
+				x_g\leftn[n\right] &=\frac{1}{2}\left(x\leftn[n\right]+x\leftn[-n\right]\right)\\
+				x_u\leftn[n\right] &=\frac{1}{2}\left(x\leftn[n\right]-x\leftn[-n\right]\right)
+			\end{align*} \begin{align*}
+				x_g\leftn[n\right] x_u\leftn[n\right]&=\frac{1}{2}\left(x\leftn[n\right]-x\leftn[-n\right]\right)\cdot \frac{1}{2}\leftn(x\leftn[n\right]-x\leftn[-n\right]\right)\\
+				&=\frac{1}{4}\left(x\leftn[n\right]+x\leftn[-n\right]\right)\cdot \left(x\leftn[n\right]-x\leftn[-n\right]\right)\\
+				&=\frac{1}{4}\left(x\leftn[n\right]^2-x\leftn[-n\right]^2\right)
+			\end{align*}
+			Das ist dieselbe Form, wie ein ungerades Signal. Genauer gesagt, ist das das ungerade Teilsignal von $\frac{x\leftn[n\right]^2}{2}$.
+		\item für das ungerade Signal gilt:
+		\[
+			\sum_{n=-\infty}^{\infty}x_u\leftn[n\right]=0
+		\]
+		Dafür spalte ich die Summe in drei Teile:
+		\[
+			\sum_{n=-\infty}^{-1}x_u\leftn[n\right]+x_u\leftn[0\right]+\sum_{n=1}^{\infty}x_u\leftn[n\right]
+		\]
+		Die erste Summe lässt sich mithilfe einer Indexverschiebung umschreiben:
+		\[
+			\sum_{n=-\infty}^{-1}x_u\leftn[n\right]=\sum_{n=1}^{\infty}x_u\leftn[-n\right]
+		\]
+		Eine Eigenschaft von ungeraden Signalen ist:
+		\[
+			x_u\leftn[-n\right]=-x_u\leftn[n\right]
+		\]
+		Das übernehmen wir nun für die Summe und erhalten:
+		\[
+			\sum_{n=-\infty}^{-1}x_u\leftn[n\right]+x_u\leftn[0\right]+\sum_{n=1}^{\infty}x_u\leftn[n\right]=x_u\leftn[0\right]+\sum_{n=1}^{\infty}x_u\leftn[n\right]-\sum_{n=1}^{\infty}x_u\leftn[n\right]
+		\]\clearpage
+		\item die Signalenergie gegeben ist durch
+		\[
+			\sum_{n=-\infty}^{\infty}x^2\leftn[n\right]=\sum_{n=-\infty}^{\infty}x_g^2\leftn[n\right]+\sum_{n=-\infty}^{\infty}x_u^2\leftn[n\right]
+		\]
+		Dafür setzen wir für $x\leftn[n\right]$ die Eigenschaft $x\leftn[n\right]=x_g\leftn[n\right]+x_u\leftn[n\right]$ ein:
+		\[
+			\sum_{n=-\infty}^{\infty}x^2\leftn[n\right]=\sum_{n=-\infty}^{\infty}\left(x_g\leftn[n\right]+x_u\leftn[n\right]\right)^2=\sum_{n=-\infty}^{\infty}\left(x_g^2\leftn[n\right]+2x_g\leftn[n\right]x_u\leftn[n\right]+x_u^2\leftn[n\right]\right)
+		\]
+		Nun müssen wir nur noch beweisen, dass $\sum_{n=-\infty}^{\infty}2x_g\leftn[n\right]x_u\leftn[n\right]=0$ gilt. Dafür ziehe ich die 2 aus der Summe und spalte sie auf:
+		\[
+			\sum_{n=-\infty}^{\infty}2x_g\leftn[n\right]x_u\leftn[n\right]=2\left(\sum_{n=-\infty}^{-1}x_g\leftn[n\right]x_u\leftn[n\right]+x_g\leftn[0\right]x_u\leftn[0\right]+\sum_{n=1}^{\infty}x_g\leftn[n\right]x_u\leftn[n\right]\right)
+		\]
+		Nun bedienen wir uns den Beweisen aus Aufgabe a und b. Durch a) wissen wir, dass die Multiplikation von einem geraden mit einem ungeraden Signal ein ungerades Signal ergibt. Im Punkt b) haben wir bewiesen, dass die unendliche Summe über ein ungerades Signal gleich 0 ist. Somit verschwinden diese drei Therme und es bleibt:
+		\[
+			\sum_{n=-\infty}^{\infty}x^2\leftn[n\right]=\sum_{n=-\infty}^{\infty}x_g^2\leftn[n\right]+\sum_{n=-\infty}^{\infty}x_u^2\leftn[n\right]
+		\]
+	\end{enumerate}
