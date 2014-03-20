@@ -1,0 +1,66 @@
+\begin{uebsp}
+    \begin{Exercise}
+        Jedes Signal $x[n]$ kann in ein gerades Signal $x_g[n]$ und in ein ungerades Signal $x_u[n]$ zerlegt werden. Zeigen Sie allgemein, dass 
+        \begin{enumerate}[a)]
+            \item das Produkt $x_g[n]x_u[n]$ ein ungerades Signal ist.
+            \item für das ungerade Signal gilt:
+                \[\sum_{n=-\infty}^\infty x_u[n]=0\]
+            \item die Signalenergie gegeben ist durch
+                \[\sum_{n=-\infty}^\infty x^2[n]=\sum_{n=-\infty}^\infty x_g^2[n]+\sum_{n=-\infty}^\infty x_u^2[n].\]
+        \end{enumerate}
+    \end{Exercise}
+    \begin{Answer}
+        \begin{enumerate}[a)]
+            \item z.z.: das Produkt $x_g[n]\cdot x_u[n]$ ist ein ungerades Signal:\label{itm:ugmul}
+                \begin{definition}\label{def:geradeungeradedef}
+                        Ein Signal heißt \textbf{gerade}, wenn gilt:
+                        \[x[-n]=x[n]\]
+                        und ein Signal heißt \textbf{ungerade}, wenn gilt:
+                        \[x[-n]=-x[n]\]
+                    \end{definition}
+
+                    \begin{uebsp_theory}
+                        In \fref{def:geradeungerade} wurde der gerade und der ungerade Anteil eines Signals definiert:
+                        \[x_g[n]=\frac{1}{2}(x[n]+x[-n])\]
+                        \[x_u[n]=\frac{1}{2}(x[n]-x[-n])\]
+                    \end{uebsp_theory}
+
+                    somit müssen wir folgendes berechnen:
+                \begin{eqnarray*}
+                    x_g[n]\cdot x_u[n]&=&\frac{1}{2}(x[n]+x[-n])\cdot\frac{1}{2}(x[n]-x[-n])\\
+                    &=&\frac{1}{4}(x[n]+x[-n])\cdot(x[n]-x[-n])\\
+                    x_g[n]\cdot x_u[n]&=&\frac{1}{4}(x[n]^2-x[-n]^2)\\
+                                      &&\text{Setzen wir nun $n=-n$:}\\
+                    x_g[-n]\cdot x_u[-n]&=&\underbrace{\frac{1}{4}(x[-n]^2-x[n]^2)}_{x[-n]}=\underbrace{-\left(\frac{1}{4}(x[n]^2-x[-n]^2)\right)}_{-x[n]}\\
+                \end{eqnarray*}
+                Somit erhalten wir: $x[-n]=-x[n]$ und gerade das ist die Definition der ungeraden Funktion (siehe \fref{def:geradeungeradedef}). q.e.d.
+        \item z.z.: $\sum_{n=-\infty}^\infty x_u[n]=0$\label{itm:sumu}
+            Als erstes spalten wir die Summe auf:
+            \[\sum_{n=-\infty}^\infty x_u[n]=\sum_{n=-\infty}^{-1} x_u[n]+\sum_{n=1}^\infty x_u[n]+x_u[0]\]
+            Laut \fref{def:geradeungeradedef} gilt: $x[-n]=-x[n]$ formt man jedoch um, erhält man: $-x[-n]=x[n]$.
+
+            Ersetzt man somit in der linken Summenformel $n$ durch $-n$, muss zusätzlich die linke Summenformel noch mit $-1$ multipliziert werden, damit wieder Gleichheit herrscht.
+            \[\sum_{n=-\infty}^\infty x_u[n]=-\sum_{n=-\infty}^{-1} x_u[-n]+\sum_{n=1}^\infty x_u[n]+x_u[0]\]
+            Dreht man nun die Vorzeichen der linken Summe um, bekommt man das folgende:
+            \[\sum_{n=-\infty}^\infty x_u[n]=\cancel{-\sum_{n=1}^{\infty} x_u[n]}+\cancel{\sum_{n=1}^\infty x_u[n]}+x_u[0]\]
+            Somit heben sich beide Summen auf und übrig bleibt:
+            \[\sum_{n=-\infty}^\infty x_u[n]=x_u[0]\]
+            Da es sich um eine ungerade Funktion handelt, muss jedoch gelten: $x_u[0]=0$ sonst wäre die Funktion nicht ungerade. (siehe Wikipedia Gerade und ungerade Funktionen)
+            \[\sum_{n=-\infty}^\infty x_u[n]=x_u[0]=0\]
+            q.e.d.
+            \item z.z. $\sum_{n=-\infty}^\infty x^2[n]=\sum_{n=-\infty}^\infty x_g^2[n]+\sum_{n=-\infty}^\infty x_u^2[n].$\\
+                Zuerst schreiben wir die Linke Seite um:
+                \begin{uebsp_theory}
+                    Jedes Signal besteht aus einem geraden und ungeraden Anteil (siehe \fref{def:geradeungerade}:
+                    \[x[n]=x_g[n]+x_u[n]\]
+                \end{uebsp_theory}
+                \[\sum_{n=-\infty}^\infty x^2[n]=\sum_{n=-\infty}^\infty(x_g[n]+x_u[n])^2=\sum_{n=-\infty}^\infty(x_g^2[n]+2x_u[n]x_g[n]+x_u^2[n])\]
+                \[\sum_{n=-\infty}^\infty x_u^2[n]=\sum_{n=-\infty}^\infty x_g^2[n]+\underbrace{\sum_{n=-\infty}^\infty 2x_u[n]x_g[n]}_{\sum_{n=-\infty}^\infty y_u[n]}+\sum_{n=-\infty}^\infty x_u^2[n]\]
+                Wie unter Punkt \ref{itm:ugmul} bereits bewiesen, ist die Multiplikation von einem geraden und einem ungeraden Signal wieder ein ungerades Signal ($2x_u[n]x_g[n]=y_u[n]\;\Rightarrow\;\sum_{n=-\infty}^\infty 2x_u[n]x_g[n]=\sum_{n=-\infty}^\infty y_u[n]$). Somit erhalten wir:
+                \[\sum_{n=-\infty}^\infty x_u^2[n]=\sum_{n=-\infty}^\infty x_g^2[n]+\underbrace{\sum_{n=-\infty}^\infty y_u[n]}_{=0}+\sum_{n=-\infty}^\infty x_u^2[n]\]
+            In Punkt \ref{itm:sumu} haben wir bereits bewiesen, dass $\sum_{n=-\infty}^\infty x_u[n]=0$, somit gilt:
+                \[\sum_{n=-\infty}^\infty x_u^2[n]=\sum_{n=-\infty}^\infty x_g^2[n]+\sum_{n=-\infty}^\infty x_u^2[n]\]
+                q.e.d.
+        \end{enumerate}
+    \end{Answer}
+\end{uebsp}

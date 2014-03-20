@@ -1,0 +1,25 @@
+\begin{uebsp}
+\begin{Exercise}
+    Welche Grundperiode hat das zeitdiskrete Signal
+    \[x[n]=e^{j\frac{2\pi}{N}nk}\]
+    in Abhängigkeit von den ganzzahligen Größen $k$ und $N$?
+\end{Exercise}
+\begin{Answer}
+Ich definiere am Anfang ein $m = 1$.
+
+Weiters definiere ich, dass $N = m\cdot Nx$ und $k = m\cdot kx$. Wobei in beiden Gleichungen ebenfalls ersichtlich ist, dass $N_x, k_x \in \mathbb{N}$.
+Somit lautet der Exponent:
+\[e^{j\frac{2\pi}{N}nk}=e^{j\frac{2\pi}{N_x\cdot m}nk_x\cdot m}\]
+
+Dass dies gilt, ist ersichtlich, denn $m=1$ ist ein gemeinsamer Teiler aller Zahlen $\mathbb N$.\\
+
+Wenn wir nun einen Schritt weiter gehen und $m$ definieren, als den gemeinsamen Teiler von $N$ und $k$, können wir genauso sagen:
+\[e^{j\frac{2\pi}{N}nk=e^{j\frac{2\pi}{N_x\cdot m}nk_x\cdot m}}\]
+Somit bekommen wir eine neue $e$-Funktion:
+\[e^{j\frac{2\pi}{N}nk=e^{j\frac{2\pi}{N_x\cdot \text{ggT}(N,k)}nk_x\cdot \text{ggT}(N,k)}}\]
+Da gilt:
+\[N=m\cdot N_x=\text{ggT}(N,k)N_x\]
+Folgt:
+\[N_x=\frac{N}{\text{ggT}(N,k)}\]
+\end{Answer}
+\end{uebsp}

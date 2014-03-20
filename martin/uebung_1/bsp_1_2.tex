@@ -1,0 +1,228 @@
+\begin{uebsp}
+    \def\formulaGer{$x_g[n]=$gerader Anteil von $x[n]$}
+    \def\formulaOne{$x_1[n]=x[n+5]\sigma [-n-5]$}
+    \begin{Exercise}
+        Von einem Signal $x[n]$ sei der gerade Anteil $x_g[n]$ und das Signal $x_1[n]$ gegeben. Bestimmen Sie den ungeraden Anteil des Signals $x[n]$.
+        \begin{center}
+
+            \def\label{\formulaGer}
+            \begin{tikzpicture}
+                \begin{axis}[%
+                    wide,
+                    legend style={at={(1,1.12), anchor=north west}},
+                    xlabel={$n$},
+                    ylabel={$x_g[n]$}]
+                    \addplot+[domain=-20:-6,ycomb,black,thick,mark=*,samples=15] {0};
+                    \addlegendentry[align=left]{\label};
+                    \addplot+[domain=6:20,ycomb,black,thick,mark=*,forget plot,samples=15] {0};
+                    \addplot+[domain=-5:0,ycomb,black,thick,mark=*,forget plot,samples=6] {-x};
+                    \addplot+[domain=1:5,ycomb,black,thick,mark=*,forget plot,samples=5] {x};
+                \end{axis}
+            \end{tikzpicture}
+        \end{center}
+
+        \begin{center}
+            \def\label{\formulaOne}
+            \begin{tikzpicture}
+                \begin{axis}[%
+                    wide,
+                    legend style={at={(1,1.12), anchor=north west}},
+                    xlabel={$n$},
+                    ylabel={$x_g[n]$}]
+                    \addplot+[domain=-20:-10,ycomb,black,thick,mark=*,samples=11] {5};
+                    \addlegendentry[align=left]{\label};
+                    \addplot+[domain=-9:-5,ycomb,black,thick,mark=*,forget plot,samples=5] {-x-5};
+                    \addplot+[domain=-5:20,ycomb,black,thick,mark=*,forget plot,samples=26] {0};
+                \end{axis}
+            \end{tikzpicture}
+        \end{center}
+    \end{Exercise}
+    \begin{Answer}
+        Wir beginnen nun schrittweise, die Funktion $x[n]$ zu erzeugen:
+        \begin{enumerate}[\bfseries 1. {Schritt:}]
+            \item Als erstes versuchen wir, das Signal $x[n]$ zu rekonstruieren:\\
+                Dazu versuchen wir uns zuerst an $x_1[n]$:
+                \begin{definition}[$\sigma$-Sprungfunktion]
+                    \[\sigma[n]=\begin{cases}0 & \text{für }n<0\\1& \text{für }n\geq 0\end{cases}\]
+                \end{definition}
+                Somit unterdrückt der Ausdruck $\sigma[-n-5]$ alle Werte von $x[n]$ im Bereich $-5<n<\infty$.
+                Das bedeutet, wir kennen die Werte von $x[n+5]$ im Bereich von $-\infty<n\leq -5$.
+
+                Durch Verschiebung von $x[n+5]$(Rechtsverschiebung um 5) erhalten wir $x[n]$ im Bereich $-\infty<n\leq 0$.\\
+                Siehe \fref{tab:fist_step}
+            \item Als nächstes versuchen wir, $x[n]$ im noch unbekannten Bereich $0<n<\infty$ zu berechnen:
+                \begin{uebsp_theory}
+                    Dazu sehen wir uns die Formel für $x_g[n]$ an (siehe \fref{def:geradeungerade})
+                    \[x_g[n]=\frac{1}{2}(\underbrace{x[n]}_{\text{unbekannt}}+\underbrace{x[-n]}_{\text{bekannt}})\;\;\forall n>0\]
+                \end{uebsp_theory}
+
+                Somit können wir, wenn wir uns die Formel etwas umstellen folgendes aussagen:
+                \[2\cdot x_g[n]-x[-n]=x[n]\;\;\forall n\geq 1\]
+                Da $x[n]\;\;\forall n\leq0$ bereits bekannt ist, können wir uns so die fehlenden Werte brechnen:\\
+                \[\text{für $n=1$: }x[1]=2\cdot x_g[1]-x[-1]=2\cdot 1-1=1\]
+                \[\text{für $n=2$: }x[2]=2\cdot x_g[2]-x[-2]=2\cdot 2-2=2\]
+                \[\vdots\]
+                \[\text{für $n=20$: }x[20]=2\cdot x_g[20]-x[-20]=2\cdot 0-5=-5\]
+                Siehe \fref{tab:second_step}.
+
+                \begin{center}
+                    \begin{tikzpicture}
+                        \begin{axis}[%
+                            big,
+                            legend style={at={(0.84,1.12), anchor=north west}},
+                            xlabel={$n$},
+                            ytick={-5,-2.5,0,2.5,5},
+                            ylabel={$x[n]$}]
+                            \addplot+[domain=-5:0,ycomb,black,thick,mark=*,samples=6] {-x};
+                            \addlegendentry[align=left]{$x[n]$};
+                            \addplot+[domain=1:5,ycomb,black,thick,mark=*,forget plot,samples=6] {x};
+                            \addplot+[domain=-11:-6,ycomb,black,thick,mark=*,forget plot,samples=6] {5};
+                            \addplot+[domain=6:11,ycomb,black,thick,mark=*,forget plot,samples=6] {-5};
+                        \end{axis}
+                    \end{tikzpicture}
+                \end{center}
+
+            \item Nun besitzen wir bereits das Signal $x[n]$ und wir müssen nur noch den ungeraden Anteil des Signals bestimmen. 
+                \begin{uebsp_theory}
+                    Die Formel für $x_u[n]$ lautete: (siehe \fref{def:geradeungerade})
+                    \[x_u[n]=\frac{1}{2}(x[n]-x[-n])\]
+                \end{uebsp_theory}
+
+                \[x_u[-20]=\frac{1}{2}(x[-20]-x[20])=\frac{1}{2}(5+5)=5\]
+                \[\vdots\]
+                \[x_u[-5]=\frac{1}{2}(x[-5]-x[5])=\frac{1}{2}(5-5)=0\]
+                \[x_u[-4]=\frac{1}{2}(x[-4]-x[4])=\frac{1}{2}(4-4)=0\]
+                \[\vdots\]
+                \[x_u[20]=\frac{1}{2}(x[20]-x[-20])=\frac{1}{2}(-5-5)=-5\]
+
+                Siehe \fref{tab:third_step}.
+
+                \begin{center}
+                    \begin{tikzpicture}
+                        \begin{axis}[%
+                            big,
+                            legend style={at={(0.84,1.12), anchor=north west}},
+                            xlabel={$n$},
+                            ytick={-5,0,5},
+                            ylabel={$x_u[n]$}]
+                            \addplot+[domain=-5:5,ycomb,black,thick,mark=*,samples=11] {0};
+                            \addlegendentry[align=left]{$x_u[n]$};
+                            \addplot+[domain=-11:-6,ycomb,black,thick,mark=*,forget plot,samples=6] {5};
+                            \addplot+[domain=6:11,ycomb,black,thick,mark=*,forget plot,samples=6] {-5};
+                        \end{axis}
+                    \end{tikzpicture}
+                \end{center}
+
+        \end{enumerate}
+    \end{Answer}
+\end{uebsp}
+\begin{landscape}
+            {
+            \begin{table}
+            \begin{center}
+            \begin{tabular}{|>{$}c<{$}|>{$}c<{$}|>{$}c<{$}|>{$}c<{$}|>{$}c<{$}|>{$}c<{$}|>{$}c<{$}|>{$}c<{$}|>{$}c<{$}|>{$}c<{$}|>{$}c<{$}|>{$}c<{$}|>{$}c<{$}|>{$}c<{$}|>{$}c<{$}|>{$}c<{$}|>{$}c<{$}|>{$}c<{$}|>{$}c<{$}|>{$}c<{$}|>{$}c<{$}|}
+                \hline
+                n & -20 & -19 & -18 & -17 & -16 & -15 & -14 & -13 & -12 & -11 & -10 & -9 & -8 & -7 & -6 & -5 & -4 & -3 & -2 & -1\\
+                \hline
+                x_1[n] & 5 & 5 & 5 & 5 & 5 & 5 & 5 & 5 & 5 & 5 & 5 & 4 & 3 & 2 & 1 & 0 & 0 & 0 & 0 & 0\\
+                \hline
+                x_g[n] & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 5 & 4 & 3 & 2 & 1\\
+                \hline
+                x[n+5] & 5 & 5 & 5 & 5 & 5 & 5 & 5 & 5 & 5 & 5 & 5 & 4 & 3 & 2 & 1 & 0 &  &  &  & \\
+                \hline
+                x[n] & 5 & 5 & 5 & 5 & 5 & 5 & 5 & 5 & 5 & 5 & 5 & 5 & 5 & 5 & 5 & 5 & 4 & 3 & 2 & 1 \\
+                \hline
+            \end{tabular}
+            \begin{tabular}{|>{$}c<{$}|>{$}c<{$}|>{$}c<{$}|>{$}c<{$}|>{$}c<{$}|>{$}c<{$}|>{$}c<{$}|>{$}c<{$}|>{$}c<{$}|>{$}c<{$}|>{$}c<{$}|>{$}c<{$}|>{$}c<{$}|>{$}c<{$}|>{$}c<{$}|>{$}c<{$}|>{$}c<{$}|>{$}c<{$}|>{$}c<{$}|>{$}c<{$}|>{$}c<{$}|>{$}c<{$}|}
+                \hline
+                n & 0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 & 11 & 12 & 13 & 14 & 15 & 16 & 17 & 18 & 19 & 20\\
+                \hline
+                x_1[n] & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\
+                \hline
+                x_g[n] & 0 & 1 & 2 & 3 & 4 & 5 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\
+                \hline
+                x[n+5] & & & & & & & & & & & & & & & & & & & & &\\
+                \hline
+                x[n] & 0 & & & & & & & & & & & & & & & & & & & &\\
+                \hline
+            \end{tabular}
+            \end{center}
+            \caption{Berechnen von $x[n]$ im Intervall $-\infty<x\leq 0$}
+            \label{tab:fist_step}
+            \end{table}
+            }
+            {
+            \begin{table}
+            \begin{center}
+            \begin{tabular}{|>{$}c<{$}|>{$}c<{$}|>{$}c<{$}|>{$}c<{$}|>{$}c<{$}|>{$}c<{$}|>{$}c<{$}|>{$}c<{$}|>{$}c<{$}|>{$}c<{$}|>{$}c<{$}|>{$}c<{$}|>{$}c<{$}|>{$}c<{$}|>{$}c<{$}|>{$}c<{$}|>{$}c<{$}|>{$}c<{$}|>{$}c<{$}|>{$}c<{$}|>{$}c<{$}|}
+                \hline
+                n & -20 & -19 & -18 & -17 & -16 & -15 & -14 & -13 & -12 & -11 & -10 & -9 & -8 & -7 & -6 & -5 & -4 & -3 & -2 & -1\\
+                \hline
+                x_1[n] & 5 & 5 & 5 & 5 & 5 & 5 & 5 & 5 & 5 & 5 & 5 & 4 & 3 & 2 & 1 & 0 & 0 & 0 & 0 & 0\\
+                \hline
+                x_g[n] & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 5 & 4 & 3 & 2 & 1\\
+                \hline
+                x[n+5] & 5 & 5 & 5 & 5 & 5 & 5 & 5 & 5 & 5 & 5 & 5 & 4 & 3 & 2 & 1 & 0 &  &  &  & \\
+                \hline
+                x[n] & 5 & 5 & 5 & 5 & 5 & 5 & 5 & 5 & 5 & 5 & 5 & 5 & 5 & 5 & 5 & 5 & 4 & 3 & 2 & 1 \\
+                \hline
+            \end{tabular}
+            \begin{tabular}{|>{$}c<{$}|>{$}c<{$}|>{$}c<{$}|>{$}c<{$}|>{$}c<{$}|>{$}c<{$}|>{$}c<{$}|>{$}c<{$}|>{$}c<{$}|>{$}c<{$}|>{$}c<{$}|>{$}c<{$}|>{$}c<{$}|>{$}c<{$}|>{$}c<{$}|>{$}c<{$}|>{$}c<{$}|>{$}c<{$}|>{$}c<{$}|>{$}c<{$}|>{$}c<{$}|>{$}c<{$}|}
+                \hline
+                n & 0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 & 11 & 12 & 13 & 14 & 15 & 16 & 17 & 18 & 19 & 20\\
+                \hline
+                x_1[n] & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\
+                \hline
+                x_g[n] & 0 & 1 & 2 & 3 & 4 & 5 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\
+                \hline
+                x[n+5] & & & & & & & & & & & & & & & & & & & & &\\
+                \hline
+                x[n] & 0 & 1 & 2 & 3 & 4 & 5 & -5 & -5 & -5 & -5 & -5 & -5 & -5 & -5 & -5 & -5 & -5 & -5 & -5 & -5 & -5\\
+                \hline
+            \end{tabular}
+            \end{center}
+            \caption{Berechnen von $x[n]$ im Intervall $1\leq x<\infty$}
+            \label{tab:second_step}
+            \end{table}
+            }
+
+            {
+            \begin{table}
+            \begin{center}
+            \begin{tabular}{|>{$}c<{$}|>{$}c<{$}|>{$}c<{$}|>{$}c<{$}|>{$}c<{$}|>{$}c<{$}|>{$}c<{$}|>{$}c<{$}|>{$}c<{$}|>{$}c<{$}|>{$}c<{$}|>{$}c<{$}|>{$}c<{$}|>{$}c<{$}|>{$}c<{$}|>{$}c<{$}|>{$}c<{$}|>{$}c<{$}|>{$}c<{$}|>{$}c<{$}|>{$}c<{$}|}
+                \hline
+                n & -20 & -19 & -18 & -17 & -16 & -15 & -14 & -13 & -12 & -11 & -10 & -9 & -8 & -7 & -6 & -5 & -4 & -3 & -2 & -1\\
+                \hline
+                x_1[n] & 5 & 5 & 5 & 5 & 5 & 5 & 5 & 5 & 5 & 5 & 5 & 4 & 3 & 2 & 1 & 0 & 0 & 0 & 0 & 0\\
+                \hline
+                x_g[n] & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 5 & 4 & 3 & 2 & 1\\
+                \hline
+                x[n+5] & 5 & 5 & 5 & 5 & 5 & 5 & 5 & 5 & 5 & 5 & 5 & 4 & 3 & 2 & 1 & 0 &  &  &  & \\
+                \hline
+                x[n] & 5 & 5 & 5 & 5 & 5 & 5 & 5 & 5 & 5 & 5 & 5 & 5 & 5 & 5 & 5 & 5 & 4 & 3 & 2 & 1 \\
+                \hline
+                x_u[n] & 5 & 5 & 5 & 5 & 5 & 5 & 5 & 5 & 5 & 5 & 5 & 5 & 5 & 5 & 5 & 0 & 0 & 0 & 0 & 0\\
+                \hline
+            \end{tabular}
+            \begin{tabular}{|>{$}c<{$}|>{$}c<{$}|>{$}c<{$}|>{$}c<{$}|>{$}c<{$}|>{$}c<{$}|>{$}c<{$}|>{$}c<{$}|>{$}c<{$}|>{$}c<{$}|>{$}c<{$}|>{$}c<{$}|>{$}c<{$}|>{$}c<{$}|>{$}c<{$}|>{$}c<{$}|>{$}c<{$}|>{$}c<{$}|>{$}c<{$}|>{$}c<{$}|>{$}c<{$}|>{$}c<{$}|}
+                \hline
+                n & 0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 & 11 & 12 & 13 & 14 & 15 & 16 & 17 & 18 & 19 & 20\\
+                \hline
+                x_1[n] & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\
+                \hline
+                x_g[n] & 0 & 1 & 2 & 3 & 4 & 5 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\
+                \hline
+                x[n+5] & & & & & & & & & & & & & & & & & & & & &\\
+                \hline
+                x[n] & 0 & 1 & 2 & 3 & 4 & 5 & -5 & -5 & -5 & -5 & -5 & -5 & -5 & -5 & -5 & -5 & -5 & -5 & -5 & -5 & -5\\
+                \hline
+                x_u[n] & 0 & 0 & 0 & 0 & 0 & 0 & -5 & -5 & -5 & -5 & -5 & -5 & -5 & -5 & -5 & -5 -5 & -5 & -5 & -5 & -5 & -5\\
+                \hline
+            \end{tabular}
+            \end{center}
+            \caption{Berechnen von $x_u[n]$}
+            \label{tab:third_step}
+            \end{table}
+            }
+        \end{landscape}
+

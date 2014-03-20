@@ -1,0 +1,31 @@
+\documentclass{scrreprt}
+\usepackage{style}
+
+\subject{1. Übung}
+\title{389.055 Signale und Systeme 2 4.0}
+\author{Byte Unit}
+\uppertitleback{Unter GNU Free Document Lizenz}
+\lowertitleback{\textcopyleft 2014 Byte Unit}
+\date{\time}
+%\publishers{}
+
+\makeatletter
+\AtBeginDocument{
+    \hypersetup{
+        pdftitle = {\@title},
+        pdfsubject={\@subtitle},
+        pdfauthor={\@author},
+        pdfproducer={Latex (Debian/GNU Linux)},
+        pdfkeywords={\@title, \@subject}
+    }
+}
+\makeatother
+
+\setcounter{tocdepth}{5}
+
+\begin{document}
+
+\input{uebung_1/bsp_1_1.tex}
+\input{uebung_1/bsp_1_2.tex}
+\input{uebung_1/bsp_1_3.tex}
+\end{document}

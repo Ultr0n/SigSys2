@@ -1,0 +1,271 @@
+\chapter{Übung}
+\begin{uebsp}
+
+\def\formulaA{$y[n]=x[n+5]$}
+\def\formulaB{$y[n]=x[-n+5]$}
+\def\formulaC{$y[n]=x[2n]$}
+\def\formulaD{ger. + unger. Teil}
+\def\formulaE{$y[n]=x[n+10]+x[-n+10]-10\delta[n]$}
+
+\begin{Exercise}
+    Für das zeitbegrenzte Signal
+    \[x[n]=\begin{cases}
+            0 & n<0\\
+            n & 0\leq n\leq 10\\
+            0 & n> 10
+        \end{cases}\]
+    zeichnen Sie folgende Signale:
+
+    \begin{enumerate}[a)]
+        \item \formulaA
+        \item \formulaB
+        \item \formulaC
+        \item gerades + ungerades Teilsignal von $x[n]$:
+        \item \formulaE
+    \end{enumerate}
+\end{Exercise}
+\begin{Answer}
+    \begin{enumerate}[a)]
+        \def\lbl{\formulaA}
+        \item \lbl:            
+            \begin{center}
+                \begin{tabular}{|>{$}c<{$}|>{$}c<{$}|>{$}c<{$}|>{$}c<{$}|>{$}c<{$}|>{$}c<{$}|>{$}c<{$}|>{$}c<{$}|>{$}c<{$}|>{$}c<{$}|>{$}c<{$}|>{$}c<{$}|>{$}c<{$}|>{$}c<{$}|}
+                    \hline
+                    $n$&<-5&-5 &-4 & -3 & -2 & -1 & 0 & 1 & 2 & 3 & 4 & 5 & >5\\
+                    \hline
+                    n+5 & <0 & 0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 & >10\\
+                    \hline
+                    \hline
+                    y[n] & 0 & 0& 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 & 0\\
+                    \hline
+                \end{tabular}
+            \end{center}
+
+
+            {
+                %signal(x)
+                \pgfmathdeclarefunction{signal}{1}{
+                    \pgfmathparse{#1+5}%
+                }
+                \begin{center}
+                    \begin{tikzpicture}
+                        \begin{axis}[%
+                            big,
+                            xlabel={$n$},
+                            ylabel={$y[n]$}]
+                            \addplot+[domain=-5:5,ycomb,black,thick,mark=*,samples=11] {signal(x)};
+                            \addlegendentry[align=left]{\lbl};
+                            \addplot+[domain=-7:-6,ycomb,black,thick,mark=*,forget plot,samples=2] {0};
+                            \addplot+[domain=6:13,ycomb,black,thick,mark=*,forget plot,samples=8] {0};
+                        \end{axis}
+                    \end{tikzpicture}
+                \end{center}
+            }
+            \def\lbl{\formulaB}
+        \item \lbl:
+            \begin{center}
+                \begin{tabular}{|>{$}c<{$}|>{$}c<{$}|>{$}c<{$}|>{$}c<{$}|>{$}c<{$}|>{$}c<{$}|>{$}c<{$}|>{$}c<{$}|>{$}c<{$}|>{$}c<{$}|>{$}c<{$}|>{$}c<{$}|>{$}c<{$}|>{$}c<{$}|}
+                    \hline
+                    $n$&<-5&-5 &-4 & -3 & -2 & -1 & 0 & 1 & 2 & 3 & 4 & 5 & >5\\
+                    \hline
+                    -n+5 & >10 & 10 & 9 & 8 & 7 & 6 & 5 & 4 & 3 & 2 & 1 & 0 & <0\\
+                    \hline
+                    \hline
+                    y[n] & 0 & 10 & 9 & 8 & 7 & 6 & 5 & 4 & 3 & 2 & 1 & 0 & 0\\
+                    \hline
+                \end{tabular}
+            \end{center}
+
+            {
+                %signal(x)
+                \pgfmathdeclarefunction{signal}{1}{
+                    \pgfmathparse{-#1+5}%
+                }
+                \begin{center}
+                    \begin{tikzpicture}
+                        \begin{axis}[%
+                            big,
+                            xlabel={$n$},
+                            ylabel={$y[n]$}]
+                            \addplot+[domain=-5:5,ycomb,black,thick,mark=*,samples=11] {signal(x)};
+                            \addlegendentry[align=left]{\lbl};
+                            \addplot+[domain=-7:-6,ycomb,black,thick,mark=*,forget plot,samples=2] {0};
+                            \addplot+[domain=6:13,ycomb,black,thick,mark=*,forget plot,samples=8] {0};
+                        \end{axis}
+                    \end{tikzpicture}
+                \end{center}
+            }
+            \def\lbl{\formulaC}
+        \item \lbl:
+            \begin{center}
+                \begin{tabular}{|>{$}c<{$}|>{$}c<{$}|>{$}c<{$}|>{$}c<{$}|>{$}c<{$}|>{$}c<{$}|>{$}c<{$}|>{$}c<{$}|>{$}c<{$}|}
+                    \hline
+                    $n$&<0 & 0 & 1 & 2 & 3 & 4 & 5 & >5\\
+                    \hline
+                    2n & <0 & 0 & 2 & 4 & 6 & 8 & 10 & >10\\
+                    \hline
+                    \hline
+                    y[n] & 0 & 0& 2 & 4 & 6 & 8 & 10 & 0\\
+                    \hline
+                \end{tabular}
+            \end{center}
+
+            {
+                %signal(x)
+                \pgfmathdeclarefunction{signal}{1}{
+                    \pgfmathparse{2*#1}%
+                }
+                \begin{center}
+                    \begin{tikzpicture}
+                        \begin{axis}[%
+                            big,
+                            xlabel={$n$},
+                            ylabel={$y[n]$}]
+                            \addplot+[domain=0:5,ycomb,black,thick,mark=*,samples=6] {signal(x)};
+                            \addlegendentry[align=left]{\lbl};
+                            \addplot+[domain=-7:-1,ycomb,black,thick,mark=*,forget plot,samples=7] {0};
+                            \addplot+[domain=6:13,ycomb,black,thick,mark=*,forget plot,samples=8] {0};
+                        \end{axis}
+                    \end{tikzpicture}
+                \end{center}
+            }
+        \item gerades + ungerades Teilsignal von $x[n]$:
+            dazu muss man sich die Einzelnen Teile erst berechnen:
+            \begin{definition}{Gerade und Ungerade}\\
+                \label{def:geradeungerade}
+                \[x[n]=x_g[n]+x_u[n]\;\;\forall n\]
+                \[x_g[n]=\frac{1}{2}(x[n]+x[-n])\;\;\forall n\]
+                \[x_u[n]=\frac{1}{2}(x[n]-x[-n])\;\;\forall n\]
+            \end{definition}
+            Z.B.: Berechnung vom geraden Teil:
+            \[x_g[-10]=\frac{1}{2}(x[-10]+x[10])=\frac{1}{2}(0+10)=\frac{10}{2}=5\]
+            \[x_g[-9]=\frac{1}{2}(x[-9]+x[9])=\frac{1}{2}(0+9)=\frac{9}{2}\]
+            \[\vdots\]
+            \[x_g[10]=\frac{1}{2}(x[10]+x[-10])=\frac{1}{2}(10+0)=\frac{10}{2}=5\]
+            \[x_u[-10]=\frac{1}{2}(x[-10]-x[10])=\frac{1}{2}(0-10)=-\frac{10}{2}=-5\]
+            \[\vdots\]
+            {
+                \begin{center}
+                    \begin{tabular}{|>{$}c<{$}|>{$}c<{$}|>{$}c<{$}|>{$}c<{$}|>{$}c<{$}|>{$}c<{$}|>{$}c<{$}|>{$}c<{$}|>{$}c<{$}|>{$}c<{$}|>{$}c<{$}|>{$}c<{$}|}
+                        \hline
+                        $n$&>10&-10 &-9 & -8 & -7 & -6 & -5 & -4 & -3 & -2 & -1\\
+                        \hline
+                        x[n] & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\
+                        \hline
+                        x[-n] & 0 & 10 & 9 & 8 & 7 & 6 & 5 & 4 & 3 & 2 & 1\\
+                        \hline
+                        \hline
+                        x_g[n]&0&\frac{10}{2}&\frac{9}{2}&\frac{8}{2}&\frac{7}{2}&\frac{6}{2}&\frac{5}{2}&\frac{4}{2}&\frac{3}{2}&\frac{2}{2}&\frac{1}{2}\\
+                        \hline
+                        x_u[n]&0&-\frac{10}{2}&-\frac{9}{2}&-\frac{8}{2}&-\frac{7}{2}&-\frac{6}{2}&-\frac{5}{2}&-\frac{4}{2}&-\frac{3}{2}&-\frac{2}{2}&-\frac{1}{2}\\
+                        \hline
+                    \end{tabular}
+                \end{center}
+
+                \begin{center}
+                    \begin{tabular}{|>{$}c<{$}|>{$}c<{$}|>{$}c<{$}|>{$}c<{$}|>{$}c<{$}|>{$}c<{$}|>{$}c<{$}|>{$}c<{$}|>{$}c<{$}|>{$}c<{$}|>{$}c<{$}|>{$}c<{$}|>{$}c<{$}|}
+                        \hline
+                        $n$&0 &1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 & >10\\
+                        \hline
+                        x[n] & 0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 & 0\\
+                        \hline
+                        x[-n] & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\
+                        \hline
+                        \hline
+                        x_g[n]=x_u[n]&0&\frac{1}{2}&\frac{2}{2}&\frac{3}{2}&\frac{4}{2}&\frac{5}{2}&\frac{6}{2}&\frac{7}{2}&\frac{8}{2}&\frac{9}{2}&\frac{10}{2}&0\\
+                        \hline
+                    \end{tabular}
+                \end{center}
+
+            }
+            {
+                \def\lbl{ger. Teil}
+                \begin{center}
+                    \begin{tikzpicture}
+                        \begin{axis}[%
+                            big,
+                            xlabel={$n$},
+                            legend style={at={(0.84,1.12), anchor=north west}},
+                            ylabel={$y[n]$}]
+                            \addplot+[domain=0:10,ycomb,black,thick,mark=*,samples=11] {x/2};
+                            \addplot+[domain=-10:0,ycomb,black,thick,mark=*,samples=11,forget plot] {-x/2};
+                            \addlegendentry[align=left]{\lbl};
+                            \addplot+[domain=-15:-11,ycomb,black,thick,mark=*,forget plot,samples=5] {0};
+                            \addplot+[domain=11:15,ycomb,black,thick,mark=*,forget plot,samples=5] {0};
+                        \end{axis}
+                    \end{tikzpicture}
+                \end{center}
+
+                \def\lbl{unger. Teil}
+                \begin{center}
+                    \begin{tikzpicture}
+                        \begin{axis}[%
+                            big,
+                            xlabel={$n$},
+                            legend style={at={(0.84,1.12), anchor=north west}},
+                        ylabel={$y[n]$}]
+                            \addplot+[domain=-10:10,ycomb,black,thick,mark=*,samples=21] {x/2};
+                            \addlegendentry[align=left]{\lbl};
+                            \addplot+[domain=-15:-11,ycomb,black,thick,mark=*,forget plot,samples=5] {0};
+                            \addplot+[domain=11:15,ycomb,black,thick,mark=*,forget plot,samples=5] {0};
+                        \end{axis}
+                    \end{tikzpicture}
+                \end{center}
+            }
+
+        \def\lbl{\formulaE}
+        \item \lbl\\
+            \begin{definition}[$\delta$-Einsimpuls]
+                \[\delta[n]=\begin{cases}1 & n=0\\0 & n\neq 0\end{cases}\]
+            \end{definition}
+            {
+            \begin{center}
+                \begin{tabular}{|>{$}c<{$}|>{$}c<{$}|>{$}c<{$}|>{$}c<{$}|>{$}c<{$}|>{$}c<{$}|>{$}c<{$}|>{$}c<{$}|>{$}c<{$}|>{$}c<{$}|>{$}c<{$}|>{$}c<{$}|}
+                    \hline
+                    $n$&<-10&-10 &-9 & -8 & -7 & -6 & -5 & -4 & -3 & -2 & -1 \\
+                    \hline
+                    x[n+10] & 0 & 0& 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 \\
+                    \hline
+                    x[-n+10] & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+                    \hline
+                    \hline
+                    y[n] & 0 & 0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 \\
+                    \hline
+                \end{tabular}
+            \end{center}
+            \begin{center}
+                \begin{tabular}{|>{$}c<{$}|>{$}c<{$}|>{$}c<{$}|>{$}c<{$}|>{$}c<{$}|>{$}c<{$}|>{$}c<{$}|>{$}c<{$}|>{$}c<{$}|>{$}c<{$}|>{$}c<{$}|>{$}c<{$}|>{$}c<{$}|>{$}c<{$}|}
+                    \hline
+                    $n$&0&1 &2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 & >10 \\
+                    \hline
+                    x[n+10] & 10 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+                    \hline
+                    x[-n+10] & 10 & 9 & 8 & 7 & 6 & 5 & 4 & 3 & 2 & 1 & 0 &0 \\
+                    \hline
+                    \hline
+                    y[n] & 10 & 9 & 8 & 7 & 6 & 5 & 4 & 3 & 2 & 1 & 0 & 0\\
+                    \hline
+                \end{tabular}
+        \end{center}
+        }
+
+        \begin{center}
+            \begin{tikzpicture}
+                \begin{axis}[%
+                    big,
+                    legend style={at={(0.84,1.12), anchor=north west}},
+                    xlabel={$n$},
+                    ylabel={$y[n]$}]
+                    \addplot+[domain=-10:0,ycomb,black,thick,mark=*,samples=11] {x+10};
+                    \addlegendentry[align=left]{\lbl};
+                    \addplot+[domain=1:10,ycomb,black,thick,mark=*,forget plot,samples=10] {-x+10};
+                    \addplot+[domain=-15:-11,ycomb,black,thick,mark=*,forget plot,samples=5] {0};
+                    \addplot+[domain=11:15,ycomb,black,thick,mark=*,forget plot,samples=5] {0};
+                \end{axis}
+            \end{tikzpicture}
+        \end{center}
+
+    \end{enumerate}
+\end{Answer}
+\end{uebsp}
+
