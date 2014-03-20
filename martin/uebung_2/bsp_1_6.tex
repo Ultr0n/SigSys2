@@ -47,6 +47,12 @@
             \underbrace{\sum_{k=0}^{N-1}d_{k}}_{N\cdot d_{k}}=\underbrace{\sum_{k=0}^{N-1}c_{-k}}_{N\cdot c_{-k}}\;\;\Rightarrow\;\;
             \cancel N\cdot d_k=\cancel N\cdot c_{-k}\\
             &\Rightarrow& \underline{\underline{d_k=c_{-k}}}
+
+            \begin{uebsp_theory}
+                Hinweis: in Formelsammlung(Fourierreihen zeitdiskreter periodischer Signale) steht:
+                \[x[-n]\Leftrightarrow c_{-k}\]
+                Somit hätte man sich die ganze Berechnung erspart, wenn man erkannt hätte, dass $x[-n]=x[N-n]$.
+            \end{uebsp_theory}
         \end{eqnarray*}
         \item $y[n]=\frac{1}{2}\left(x[n]+x^*\left[N-n\right]\right)$
             \begin{uebsp_theory}
@@ -58,7 +64,7 @@
                 y[n]=\frac{1}{2}(x[n]+x^*[N-n])\;\Rightarrow\;y[n]=\frac{1}{2}(x[n]+x^*[-n])
             \end{eqnarray*}
             \begin{uebsp_theory}
-                Lt. Formel in Formelsammlung gilt:
+                Lt. Formel in Formelsammlung(Fourierreihen zeitdiskreter periodischer Signale) gilt:
                 \[x_e[n]=\frac{1}{2}\left(x[n]+x^*[-n]\;\right)\Leftrightarrow\;\Re e\{c_k\}\]
             \end{uebsp_theory}
             Somit gilt:
@@ -71,6 +77,9 @@
         \stepcounter{enumi}%increment counter by one
         \item $y[n]=x[n]\cos\frac{2\pi L}{M}n,\;\;L$ und $M$ ganzzahlig
         \item $y[n]=x^2[n]$
+            \begin{eqnarray*}
+
+            \end{eqnarray*}
     \end{enumerate}
 \end{Answer}
 \end{uebsp}
