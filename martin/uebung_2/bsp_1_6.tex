@@ -15,5 +15,45 @@
     \end{enumerate}
 \end{Exercise}
 \begin{Answer}
+     \begin{enumerate}[a)]
+        \item $y[n]=x\left[n-\frac{N}{2}\right],\;\;N$ gerade
+            \begin{uebsp_theory}
+            Beachte, dass folgendes gilt:
+            \[e^{j\cdot\pi}=-1\]
+            \end{uebsp_theory}
+
+        \begin{eqnarray*}
+            y[n]&=&x\left[n-\frac{N}{2}\right]=\sum_{k=0}^{N-1}c_k\cdot e^{j\frac{2\pi}{N}\left(n-\frac{N}{2}\right)k}=
+            \sum_{k=0}^{N-1}c_k\cdot e^{j\frac{2\pi}{N}nk}\cdot e^{-j\frac{\cancel 2\pi}{\cancel N}\left(\frac{\cancel N}{\cancel 2}\right)k}\\
+        y[n]&=&\sum_{k=0}^{N-1}c_k\cdot e^{j\frac{2\pi}{N}nk}\cdot (\underbrace{e^{-j\pi}}_{-1})^k=
+            \underbrace{\sum_{k=0}^{N-1}c_k\cdot e^{j\frac{2\pi}{N}nk}}_{x[n]}\cdot -1^k=(-1)^k\cdot x[n]\\
+        \Rightarrow d_k&=&c_k(-1)^k
+        \end{eqnarray*}
+        \item $y[n]=x\left[N-n\right]$
+            \begin{uebsp_theory}
+            Beachte, dass folgendes gilt:
+            \[e^{j\cdot 2\cdot\pi}=1\]
+            \end{uebsp_theory}
+
+        \begin{eqnarray*}
+            y[n]&=&x\left[N-n\right]=\sum_{k=0}^{N-1}c_k\cdot e^{j\frac{2\pi}{N}\left(N-n\right)k}=
+            \sum_{k=0}^{N-1}c_k\cdot e^{-j\frac{2\pi}{N}k\cdot n}\cdot e^{j\frac{2\pi}{\cancel N}\cancel N\cdot k}\\
+            y[n]&=&\sum_{k=0}^{N-1}c_k\cdot e^{-j\frac{2\pi}{N}k\cdot n}\cdot (\underbrace{e^{j\cdot 2\pi}}_{=1})^k=\sum_{k=0}^{N-1}c_k\cdot e^{-j\frac{2\pi}{N}k\cdot n}
+        \end{eqnarray*}
+        Substituiere: $k=-k$
+        \begin{eqnarray*}
+            y[n]&=&\sum_{k=0}^{N-1}c_{-k}\cdot e^{j\frac{2\pi}{N}k\cdot n}
+        \end{eqnarray*}
+
+        \begin{eqnarray*}
+            \sum_{k=0}^{N-1}d_k\cancel{e^{j\frac{2\pi}{N}nk}}&=&\sum_{k=0}^{N-1}c_{-k}\cdot \cancel{e^{j\frac{2\pi}{N}k\cdot n}}\;\;\Rightarrow\;\;\sum_{k=0}^{N-1}c_{-k}=\sum_{k=0}^{N-1}d_{k}\;\;\Rightarrow\;\;\cancel N\cdot d_k=\cancel N\cdot c_{-k}\\
+            \Rightarrow d_k&=&c_{-k}
+        \end{eqnarray*}
+
+        \item $y[n]=\frac{1}{2}\left(x[n]+x^*\left[N-n\right]\right)$
+        \item $\cancel{y[n]=x[2n]}$
+        \item $y[n]=x[n]\cos\frac{2\pi L}{M}n,\;\;L$ und $M$ ganzzahlig
+        \item $y[n]=x^2[n]$
+    \end{enumerate}
 \end{Answer}
 \end{uebsp}

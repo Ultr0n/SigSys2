@@ -4,5 +4,25 @@ Das Signal $x[n]$ sei periodisch mit der Periode $N$. Prüfen Sie, ob das Signal
 ($M$ ganzzahlig) ebenfalls periodisch ist. Bestimmen Sie gegebenenfalls die Periode von $y[n]$.
 \end{Exercise}
 \begin{Answer}
+    \begin{uebsp_theory}
+    Ein Signal heißt \textbf{Periodisch}, mit der Periodendauer $N\in\mathbb{Z}$, wenn gilt: (bei beliebigem $m\in \mathbb{Z}$)
+    \[x[n]=x[n+mN]\]
+    \end{uebsp_theory}
+
+    Angenommen, wir definieren 2 Variablen:\\
+    $n\in\mathbb{N}$ und $o=2n$, dann ist klar, dass $o\in\mathbb{Z}$ ebenfalls gilt.\\
+    
+    Nehmen wir nun allgemein die Variable $M\in\mathbb{Z}$ und definieren $l=Mn$, dann gilt auch $l\in\mathbb{Z}$.\\
+
+    Somit gilt folgendes: (denn die gesamten Variablen $n$, $o$ und $l$ liegen ja im Zahlenbereich von $\mathbb{Z}$.)
+    \[x[n]=x[n+m_xN_x]\;\;\text{und}\;\;x[o]=x[o+m_xN_x]\;\;\text{und}\;\;x[l]=x[l+m_xN_x]\]
+    Das bedeutet, dass $x[n]$, $x[o]$ und $x[l]$ periodische Signale sind.
+    
+    Somit muss $y[n]$ auch ein periodisches Signal sein, denn es gilt:
+    \[x[l]=x[Mn]=y[n]=y[n+m_yN_y]\]
+
+    Zum Bestimmen der Periode überlegen wir uns folgendes:
+    \[x[Mn+m_xN_x]=y[n+m_yN_y]\]
+
 \end{Answer}
 \end{uebsp}

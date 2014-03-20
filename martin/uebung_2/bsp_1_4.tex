@@ -5,11 +5,16 @@
     in Abhängigkeit von den ganzzahligen Größen $k$ und $N$?
 \end{Exercise}
 \begin{Answer}
+\begin{uebsp_theory}
+    Ein Signal heißt \textbf{Periodisch}, mit der Periodendauer $N\in\mathbb{Z}$, wenn gilt: (bei beliebigem $m\in \mathbb{Z}$)
+    \[x[n]=x[n+mN]\]
+\end{uebsp_theory}
+
 Ich definiere am Anfang ein $m = 1$.
 
-Weiters definiere ich, dass $N = m\cdot Nx$ und $k = m\cdot kx$. Wobei in beiden Gleichungen ebenfalls ersichtlich ist, dass $N_x, k_x \in \mathbb{N}$.
+Weiters definiere ich, dass $N = m\cdot Nx$ und $k = m\cdot kx$. Wobei in beiden Gleichungen ebenfalls ersichtlich ist, dass $N_x, k_x \in \mathbb{Z}$.
 Somit lautet der Exponent:
-\[e^{j\frac{2\pi}{N}nk}=e^{j\frac{2\pi}{N_x\cdot m}nk_x\cdot m}\]
+\[x[n]=e^{j\frac{2\pi}{N}nk}=e^{j\frac{2\pi}{N_x\cdot m}nk_x\cdot m}\]
 
 Dass dies gilt, ist ersichtlich, denn $m=1$ ist ein gemeinsamer Teiler aller Zahlen $\mathbb N$.\\
 
