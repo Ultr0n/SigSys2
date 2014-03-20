@@ -2,3 +2,61 @@
 \subsection*{Angabe}
 Das Signal $x\leftn[n\right]$ sei periodisch mit der Periode $N$. Prüfen Sie, ob das Signal $y\leftn[n\right]=x\leftn[Mn\right]$ ($M$ ganzzahlig) ebenfalls periodisch ist. Bestimmen Sie gegebenenfalls die Periode von $y\leftn[n\right]$.
 \subsection*{Lösung}
+Das Signal $y\leftn[n\right]$ ist auf jeden Fall periodisch. Für die Ermittlung der neuen Periode betrachten wir folgendes Beispielsignal:
+	\begin{figure}[!h]	%1.2) x_u[n]
+	\centering
+		\begin{tikzpicture}[scale=0.6]
+			\begin{axis}[
+				xmin=0, xmax=30,
+				domain=0:30,
+				axis x line=middle,
+				axis y line=left,
+				ylabel = {$x\leftn[n\right]$},
+				y label style={at={(0.05,0.9)}},
+				xlabel = $n$,
+	       		xtick={0,5,...,30},
+				]
+				\addplot+[ycomb,blue,thick,domain=0:1,samples=31,mark=o] table {1_5_csv.csv};
+			\end{axis}
+		\end{tikzpicture}
+	\end{figure}\\
+Das Signal besitzt offensichtlich die Periode $N=10$. Nun wählen wir $M=2$ und erhalten:
+	\begin{figure}[!h]	%1.2) x_u[n]
+	\centering
+		\begin{tikzpicture}[scale=0.6]
+			\begin{axis}[
+				xmin=0, xmax=30,
+				domain=0:30,
+				axis x line=middle,
+				axis y line=left,
+				ylabel = {$y\leftn[n\right]=x\leftn[2n\right]$},
+				y label style={at={(0.03,0.7)}},
+				xlabel = $n$,
+	       		xtick={0,5,...,30},
+				]
+				\addplot+[ycomb,blue,thick,domain=0:1,samples=31,mark=o] table {1_5_csv2.csv};
+			\end{axis}
+		\end{tikzpicture}
+	\end{figure}\\
+Wir wählen nur jeden zweiten Wert, unsere Periode verkürzt sich auf $N=5$. Dasselbe führen wir mit $M=3$ durch:
+	\begin{figure}[!h]	%1.2) x_u[n]
+	\centering
+		\begin{tikzpicture}[scale=0.6]
+			\begin{axis}[
+				xmin=0, xmax=30,
+				domain=0:30,
+				axis x line=middle,
+				axis y line=left,
+				ylabel = {$y\leftn[n\right]=x\leftn[3n\right]$},
+				y label style={at={(0.03,0.7)}},
+				xlabel = $n$,
+	       		xtick={0,5,...,30},
+				]
+				\addplot+[ycomb,blue,thick,domain=0:1,samples=31,mark=o] table {1_5_csv3.csv};
+			\end{axis}
+		\end{tikzpicture}
+	\end{figure}\\
+Hier wird nur jeder dritte Wert verwendet. Die Periode ist diesesmal $N=10$. Die Formel lautet
+\begin{center}
+	$N_x=\frac{N}{ggT(N,k)}$
+\end{center}
