@@ -9,3 +9,15 @@ Welche Grundperiode hat das zeitdiskrete Signal
 in Abhängigkeit von den ganzzahligen Größen $k$ und $N$?
 
 \subsection*{Lösung}
+Für ein periodisches Signal $x\leftn[n\right]$ mit der Periode $N$ gilt allgemein
+\[
+	x\leftn[n\right]=x\leftn[n+m\cdot N\right], \; m\in \mathbb{Z}
+\]
+Wenden wir nun diese Eigenschaft auf unser zeitdiskretes Signal an:
+\begin{align*}
+	x\leftn[n+N\right] &= e^{j\frac{2\pi}{N}(n+N)k}\\
+	&= e^{j\frac{2\pi}{N}nk}e^{j\frac{2\pi}{N}Nk}\\
+	&= e^{j\frac{2\pi}{N}nk}\underbrace{e^{j2\pi k}}_{=1}\\
+	&= e^{j\frac{2\pi}{N}nk}
+\end{align*}
+In der Funktion bezeichnen wir $N$ als die \textbf{Periodendauer der Grundfrequenz}. Durch die Variation von $k=0,1,...,N-1$ erzeugen wir ganzzahlige Vielfache der Grundfrequenz, also harmonische Exponentialschwingungen bzw. Oberschwingungen.

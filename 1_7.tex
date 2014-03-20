@@ -7,3 +7,47 @@ Für die gegebenen periodischen Signale bestimme man die Fourierreihenkoeffizien
 	\item $x\leftn[n\right]=\sum\limits_{k=-\infty}^{\infty}\delta \leftn[n-3k\right]$
 \end{enumerate}
 \subsection*{Lösung}
+Für die Fourierreihenkoeffizienten $c_k$ gilt:
+\[
+	c_k=\frac{1}{N}\sum_{n=0}^{N-1}x\leftn[n\right]e^{-j\frac{2\pi}{N}kn}, \; k=0,1,...,N-1
+\]
+Außerdem hilft uns die Summenformel der endlichen geometrischen Reihe weiter:
+\[
+	\sum_{k=0}^{N-1}x^k=\frac{1-x^N}{1-x}
+\]
+\begin{enumerate}[a)]
+	\item $x\leftn[n\right]=1-cos\frac{\pi}{4}n$\\
+	\begin{align*}
+		c_k &= \frac{1}{N}\sum_{n=0}^{N-1}x\leftn[n\right]e^{-j\frac{2\pi}{N}kn}\\
+		&= \frac{1}{N}\sum_{n=0}^{N-1}\left(1-cos\left(\frac{\pi}{4}n\right)\right)e^{-j\frac{2\pi}{N}kn}\\
+		&= \frac{1}{N}\sum_{n=0}^{N-1}e^{-j\frac{2\pi}{N}kn}-\frac{1}{N}\sum_{n=0}^{N-1}cos\left(\frac{\pi}{4}n\right)e^{-j\frac{2\pi}{N}kn}
+	\end{align*}
+	Nun benutzen wir die Umformung
+	\[
+		cos(x)=\frac{1}{2}\left(e^{jx}+e^{-jx}\right)
+	\]
+	und erhalten:
+	\begin{align*}
+		c_k &= \frac{1}{N}\sum_{n=0}^{N-1}e^{-j\frac{2\pi}{N}kn}-\frac{1}{2N}\sum_{n=0}^{N-1}e^{j\frac{\pi}{4}n}e^{-j\frac{2\pi}{N}kn}-\frac{1}{2N}\sum_{n=0}^{N-1}e^{-j\frac{\pi}{4}n}e^{-j\frac{2\pi}{N}kn}\\
+		&= \frac{1}{N}\sum_{n=0}^{N-1}e^{-j\frac{2\pi}{N}kn}-
+		\frac{1}{2N}\sum_{n=0}^{N-1}e^{j\frac{2\pi}{N}n(\frac{N}{8}-k)}-
+		\frac{1}{2N}\sum_{n=0}^{N-1}e^{j\frac{2\pi}{N}n(-\frac{N}{8}-k)}
+	\end{align*}
+	Nun wenden wir die Summenformel an und erhalten:
+	\begin{align*}
+		c_k &=
+			\frac{1}{N} \frac{1-e^{-j2\pi k}}{1-e^{-j\frac{2\pi}{N}k}} -
+			\frac{1}{2N} \frac{1-e^{j2\pi \left(N-k\right)}}{1-e^{j\frac{2\pi}{N} \left(N-k\right)}} -
+			\frac{1}{2N} \frac{1-e^{j2\pi \left(-N-k\right)}}{1-e^{j\frac{2\pi}{N} \left(-N-k\right)}}
+	\end{align*}
+	Ich darf den Exponenten beliebig mit N erweitern (siehe Folie 26 - Handout 1):
+	\begin{align*}
+		c_k &=
+			\frac{1}{N} \frac{1-e^{-j2\pi k}}{1-e^{-j\frac{2\pi}{N}k}} -
+			\frac{1}{2N} \frac{1-e^{j2\pi \left(N-k\right)}}{1-e^{j\frac{2\pi}{N} \left(N-k\right)}} -
+			\frac{1}{2N} \frac{1-e^{j2\pi \left(N-k\right)}}{1-e^{j\frac{2\pi}{N} \left(N-k\right)}}\\
+			&=
+			\frac{1}{N} \frac{1-e^{-j2\pi k}}{1-e^{-j\frac{2\pi}{N}k}} -
+			\frac{1}{N} \frac{1-e^{j2\pi \left(N-k\right)}}{1-e^{j\frac{2\pi}{N} \left(N-k\right)}}
+	\end{align*}
+\end{enumerate}
