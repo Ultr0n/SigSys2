@@ -6,19 +6,22 @@
 \end{Exercise}
 \begin{Answer}
 \begin{uebsp_theory}
-    Ein Signal heißt \textbf{Periodisch}, mit der Periodendauer $N\in\mathbb{Z}$, wenn gilt: (bei beliebigem $m\in \mathbb{Z}$)
+    Ein Signal heißt \textbf{Periodisch}, mit der Periodendauer $N\in\mathbb{Z}$, wenn gilt: (bei beliebigem $m\in \mathbb{N}$)
     \[x[n]=x[n+mN]\]
+\end{uebsp_theory}
+\begin{uebsp_theory}
+    Die Grundperiode ist definiert, als die kleinste Periode unter der Menge aller möglichen Perioden von $x[n]$.
 \end{uebsp_theory}
 
 Ich definiere am Anfang ein $m = 1$.
 
-Weiters definiere ich, dass $N = m\cdot Nx$ und $k = m\cdot kx$. Wobei in beiden Gleichungen ebenfalls ersichtlich ist, dass $N_x, k_x \in \mathbb{Z}$.
+Weiters definiere ich, dass $N = m\cdot Nx$ und $k = m\cdot kx$. Wobei in beiden Gleichungen ebenfalls ersichtlich ist, dass $N_x, k_x \in \mathbb{Z}$. (denn laut Angabe ist auch $k\in\mathbb{N}$ und $N\in\mathbb{N}$.
 Somit lautet der Exponent:
 \[x[n]=e^{j\frac{2\pi}{N}nk}=e^{j\frac{2\pi}{N_x\cdot m}nk_x\cdot m}\]
 
 Dass dies gilt, ist ersichtlich, denn $m=1$ ist ein gemeinsamer Teiler aller Zahlen $\mathbb N$.\\
 
-Wenn wir nun einen Schritt weiter gehen und $m$ definieren, als den gemeinsamen Teiler von $N$ und $k$, können wir genauso sagen:
+Ohne Beschränkung der Allgemeinheit können wir nun einen Schritt weiter gehen und $m$ als den gemeinsamen Teiler von $N$ und $k$ definieren. Somit können wir sagen:
 \[e^{j\frac{2\pi}{N}nk=e^{j\frac{2\pi}{N_x\cdot m}nk_x\cdot m}}\]
 Somit bekommen wir eine neue $e$-Funktion:
 \[e^{j\frac{2\pi}{N}nk=e^{j\frac{2\pi}{N_x\cdot \text{ggT}(N,k)}nk_x\cdot \text{ggT}(N,k)}}\]
@@ -26,5 +29,41 @@ Da gilt:
 \[N=m\cdot N_x=\text{ggT}(N,k)N_x\]
 Folgt:
 \[\underline{\underline{N_x=\frac{N}{\text{ggT}(N,k)}}}\]
+
+Für den Zusammenhang zwischen ggT und kgV gilt in diesem Fall:
+\[ggT\cdot kgV=k\cdot N\;\;\Rightarrow\;\;\underline{\underline{N_x=\frac{kgV(N,k)}{k}}}\]
+\begin{bsp}
+$k=70$, $N=120$, die Primfaktorzerlegung ergibt folgendes:\\
+\begin{center}
+\begin{tabular}{c|c|c}
+&$k=70$&$N=120$\\
+\hline
+2&{\color{red}1}&{\color{green}3}\\
+3&{\color{red}0}&{\color{green}1}\\
+5&{\color{red}1}&{\color{green}1}\\
+7&{\color{green}1}&{\color{red}0}\\
+\hline
+\end{tabular}
+\end{center}
+D.h. $k=2\cdot5\cdot7=70$ und $N=2^3\cdot3\cdot5=120$
+Somit berechnet sich der {\color{red}ggT} als das kleinere der beiden Zahlen in der Tabelle:
+\[\text{ggT}(N,k)=2^1\cdot 3^0\cdot 5^1\cdot 7^0=10\]
+
+Und das {\color{green}kgV} als das größere der beiden Zahlen in der Tabelle:
+\[\text{kgV}(N,k)=2^3\cdot 3^1\cdot 5^1\cdot 7^1=840\]
+\end{bsp}
+
+\begin{hint}
+Der Weg vom Tutor war der folgende:
+\begin{eqnarray*}
+e^{j\frac{2\pi}{N}nk}&=&e^{j\frac{2\pi}{N}(n+N_x)k}\\
+\cancel{e^{j\frac{2\pi}{N}nk}}&=&\cancel{e^{j\frac{2\pi}{N}nk}}\cdot e^{j\frac{2\pi}{N}N_xk}\\
+1&=&e^{j\frac{2\pi}{N}N_xk}
+\end{eqnarray*}
+Wobei hier ersichtlich sein sollte, dass $\frac{1}{N}N_xk\in\mathbb{N}$ ist.
+\[N_x\cdot\frac{\frac{k}{\text{ggT}(k,N)}}{\frac{N}{\text{ggT}(k,N)}}\]
+
+\textbf{TODO: keine ahnung was das bringt, hab aber auch keinen bock mehr!!!}
+\end{hint}
 \end{Answer}
 \end{uebsp}

@@ -8,5 +8,76 @@ Für die gegebenen periodischen Signale bestimme man die Fourierreihenkoeffizien
 \end{enumerate}
 \end{Exercise}
 \begin{Answer}
+\begin{enumerate}[a)]
+    \item $x[n]=1-\cos\frac{\pi}{4}n$\\
+        Zuerst bestimmen wir uns die Periodendauer $N=T$:
+        Da unser Signal aus $\cos\frac{\pi}{4}$ besteht, ist unsere Kreisfrequenz wie folgt definiert: \\
+        $\cos[\omega\cdot n+\varphi]\;\;\Rightarrow\;\;\omega=\frac{\pi}{4},\;\varphi=0$
+        \[\omega=2\cdot \pi\cdot f=\frac{2\cdot\pi}{T}=\frac{\pi}{4}\;\;\Rightarrow\;\;T=N=\frac{2\cdot\cancel\pi\cdot 4}{\cancel\pi}=2\cdot 4=8\]
+        \begin{uebsp_theory}
+            Der Fourierkoeffizient $c_k$ ist wie folgt definiert:
+            \[c_k=\frac{1}{N}\cdot\sum_{n=0}^{N-1}x[n]\cdot e^{-j\frac{2\pi}{N}kn}\;\;\forall k\leq N-1\;\text{ und }\;k\geq 0\]
+        \end{uebsp_theory}
+        \begin{eqnarray*}
+            c_k&=&\frac{1}{N}\cdot\sum_{n=0}^{N-1}x[n]\cdot e^{-j\frac{2\pi}{N}kn}=
+            \frac{1}{8}\cdot\sum_{n=0}^{7}\left(1-\cos\frac{\pi}{4}n\right)\cdot e^{-j\frac{2\pi}{8}kn}\\
+            c_k&=&\frac{1}{8}\cdot\sum_{n=0}^{7}\left(1-\cos\frac{\pi}{4}n\right)\cdot e^{-j\frac{\pi}{4}kn}
+        \end{eqnarray*}
+        \begin{uebsp_theory}
+            Nicht vergessen auf folgende Beziehung: \[\cos x=\frac{1}{2}\left(e^{jx}+e^{-jx}\right)\]
+        \end{uebsp_theory}
+        \begin{eqnarray*}
+            c_k&=&\frac{1}{8}\cdot\sum_{n=0}^{7}\left(1-\frac{1}{2}\left(e^{j\frac{\pi}{4}n}+e^{-j\frac{\pi}{4}n}\right)\right)\cdot e^{-j\frac{\pi}{4}kn}\\
+            c_k&=&\frac{1}{8}\cdot\left(\sum_{n=0}^{7} e^{-j\frac{\pi}{4}kn}+\frac{1}{2}\sum_{n=0}^{7}\left(e^{j\frac{\pi}{4}n}+e^{-j\frac{\pi}{4}n}\right)\cdot e^{-j\frac{\pi}{4}kn}\right)\\
+            c_k&=&\frac{1}{8}\cdot\left(\sum_{n=0}^{7} e^{-j\frac{\pi}{4}kn}+\frac{1}{2}\sum_{n=0}^{7}\left(e^{j\frac{\pi}{4}n(1-k)}+e^{-j\frac{\pi}{4}n(k+1)}\right)\right)
+        \end{eqnarray*}
+        \begin{uebsp_theory}
+            Es gilt auch folgender Zusammenhang:(Dirac-Kamm)
+            \[\frac{1}{N}\sum_{n=0}^{N-1}e^{j\frac{2\pi}{N}kn}=\frac{1}{N}\sum_{-\infty}^{\infty}e^{j\frac{2\pi}{N}kn}=\sum_{n=-\infty}^{\infty}\delta[k+nN]\]
+        \end{uebsp_theory}
+        \begin{eqnarray*}
+            c_k&=&\frac{1}{8}\cdot\left(8\cdot \sum_{n=-\infty}^{\infty}\delta[k+8n]+\frac{1}{2}\sum_{n=0}^{7}\left(e^{j\frac{\pi}{4}n(1-k)}+e^{-j\frac{\pi}{4}n(k+1)}\right)\right)\\
+            c_k&=&\sum_{n=-\infty}^{\infty}\delta[k+8n]+\frac{1}{2}\left(\underbrace{\frac{1}{8}\sum_{n=0}^{7}e^{-j\frac{\pi}{4}n(k-1)}}_{\sum_{n=-\infty}^\infty\delta[k-1+8n]}+\underbrace{\frac{1}{8}\sum_{n=0}^{7}e^{-j\frac{\pi}{4}n(k+1)}}_{\sum_{n=-\infty}^\infty\delta[k+1+8n]}\right)\\
+            c_k&=&\sum_{n=-\infty}^{\infty}\delta[k+8n]+\frac{1}{2}\left({\sum_{n=-\infty}^\infty\delta[k-1+8n]}+{\sum_{n=-\infty}^\infty\delta[k+1+8n]}\right)
+        \end{eqnarray*}
+        \begin{uebsp_theory}
+            Mit dem $N$-periodischen $\delta$-Puls $\delta_N[k]$ kann man auch schreiben:
+            \[\sum_{n=-\infty}^{\infty}\delta[k+nN]=\delta_N[k]\]
+        \end{uebsp_theory}
+        \begin{eqnarray*}
+            c_k&=&\delta_8[k]+\frac{1}{2}\left(\delta_8[k-1]+\delta_8[k+1]\right)
+        \end{eqnarray*}
+    \item $x[n]=\left(\frac{1}{2}\right)^n$, $-2\leq n \leq 3$ und $x[n+6]=x[n]$.\\
+        Zuerst bestimmen wir uns die Periodendauer $N=T$:\\
+        Da für unser Signal gilt: $x[n+6]=x[n]$, ist unsere Periodendauer $N=T=6$.
+        \begin{eqnarray*}
+            c_k&=&\frac{1}{N}\cdot\sum_{n=0}^{N-1}x[n]\cdot e^{-j\frac{2\pi}{N}kn}=
+            \frac{1}{6}\cdot\sum_{n=-2}^{3}\left(\frac{1}{2}\right)^n\cdot e^{-j\frac{2\pi}{6}kn}=\\
+            c_k&=&\frac{1}{6}\cdot\sum_{n=0}^{5}\left(\frac{1}{2}\right)^{n-2}\cdot e^{-j\frac{2\pi}{6}k(n-2)}=
+            \frac{1}{6}\cdot\sum_{n=0}^{5}\left(\frac{1}{2}\right)^{n-2}\cdot e^{-j\frac{2\pi}{6}kn}\cdot e^{j\frac{4\pi}{6}k}\\
+            c_k&=&\frac{1}{6}\cdot e^{j\frac{4\pi}{6}k}\cdot\sum_{n=0}^{5}\underbrace{\left(\frac{1}{2}\right)^{n-2}}_{\left(\frac{1}{2}\right)^n\cdot 2^2}\cdot e^{-j\frac{2\pi}{6}kn}=
+            \frac{1}{6}\cdot e^{j\frac{4\pi}{6}k}\cdot\sum_{n=0}^{5}{\left(\frac{1}{2}\right)^n\cdot 2^2}\cdot e^{-j\frac{2\pi}{6}kn}\\
+            c_k&=&\frac{4}{6}\cdot e^{j\frac{4\pi}{6}k}\cdot\sum_{n=0}^{5}{\left(\frac{1}{2}\right)^n}\cdot e^{-j\frac{2\pi}{6}kn}=\frac{4}{6}\cdot e^{j\frac{4\pi}{6}k}\cdot\sum_{n=0}^{5}\left(\frac{1}{2}\cdot e^{-j\frac{\pi}{3}k}\right)^n=
+        \end{eqnarray*}
+        \begin{uebsp_theory}
+            Die Summenformel der unendlichen Geometrischen Reihe:
+            \[\sum_{n=0}^{N-1}q^n=\frac{1-q^N}{1-q}\]
+        \end{uebsp_theory}
+        \begin{eqnarray*}
+            c_k&=&\frac{2}{3}\cdot e^{j\frac{4\pi}{6}k}\cdot\frac{1-\left(\frac{1}{2}\cdot e^{-j\frac{\pi}{3}k}\right)^6}{1-\left(\frac{1}{2}\cdot e^{-j\frac{\pi}{3}k}\right)}=
+            \frac{2}{3}\cdot e^{j\frac{4\pi}{6}k}\cdot\frac{1-\left(\frac{1}{2}\right)^6\cdot e^{-j\frac{6\pi}{3}k}}{1-\left(\frac{1}{2}\cdot e^{-j\frac{\pi}{3}k}\right)}\\
+    c_k&=&\frac{2}{3}\cdot e^{j\frac{4\pi}{6}k}\cdot\frac{1-\left(\frac{1}{2}\right)^6\cdot \overbrace{e^{-j2\pi k}}^{=1}}{1-\left(\frac{1}{2}\cdot e^{-j\frac{\pi}{3}k}\right)}=
+            \underline{\underline{\frac{2}{3}\cdot e^{j\frac{4\pi}{6}k}\cdot\frac{1-\left(\frac{1}{2}\right)^6}{1-\left(\frac{1}{2}\cdot e^{-j\frac{\pi}{3}k}\right)}}}
+        \end{eqnarray*}
+    \item $x[n]=\sum_{k=-\infty}^\infty\delta[n-3k]$\\
+        Zuerst bestimmen wir uns die Periodendauer $N=T$:\\
+        Da unser Signal so aufgebaut ist: $x[n]=\sum_{k=-\infty}^\infty\delta[n-3k]$, ist unsere Periodendauer $N=T=3$.
+        \begin{uebsp_theory}
+        Laut der Formelsammlung(Fourierreihen zeidiskreter periodischer Signale $\rightarrow$ Einige Fourierreihen) gilt:
+        \[\sum_{m=-\infty}^\infty\delta[n-mN]\;\;\Leftrightarrow\;\;\frac{1}{N}\forall k\]
+        \end{uebsp_theory}
+        Das schwierigste ist somit bereits geschafft, denn das $N$ ist bei uns $3$:
+        \[\sum_{m=-\infty}^\infty\delta[n-m3]\;\;\Leftrightarrow\;\;\frac{1}{3}\forall k\]
+\end{enumerate}
 \end{Answer}
 \end{uebsp}

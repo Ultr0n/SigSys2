@@ -17,9 +17,12 @@
 \begin{Answer}
      \begin{enumerate}[a)]
         \item $y[n]=x\left[n-\frac{N}{2}\right],\;\;N$ gerade
+            \begin{definition}[Eulersche Formel]
+                \[e^{j\varphi}=\cos(\varphi)+j\sin(\varphi)\]
+            \end{definition}
             \begin{uebsp_theory}
-            Beachte, dass folgendes gilt:
-            \[e^{j\cdot\pi}=-1\]
+                Mit der Eulerschen Formel können wir uns folgedes herleiten:
+                \[e^{j\cdot\pi}=\underbrace{\cos(\pi)}_{=-1}+\underbrace{j\sin(\pi)}_{=0}=-1\]
             \end{uebsp_theory}
 
         \begin{eqnarray*}
@@ -32,10 +35,16 @@
             \cancel N\cdot d_k&=&(-1)^k\cancel N\cdot c_{k}\;\;\Rightarrow\;\;
             \underline{\underline{d_k=c_{k}(-1)^k}}
         \end{eqnarray*}
+        \begin{hint}
+            Hier gibts in der Formelsammlung(Fourierreihen zeitdiskreter periodischer Signale) eine nette Formel, die besagt:
+            \[x[n-N_0]\;\;\Leftrightarrow\;\;e^{-j\frac{2\pi k}{N}N_0}\cdot c_k\]
+            Somit kann man das ganze etwas abkürzen, indem man sagt:
+            \[x[n-\frac{N}{2}]\;\;\Leftrightarrow\;\;e^{-j\frac{\cancel 2\pi k}{\cancel N}\frac{\cancel N}{\cancel 2}}\cdot c_k=\underbrace{e^{-j\pi k}}_{=(-1)^k}\cdot c_k=c_k\cdot (-1)^k\]
+        \end{hint}
         \item $y[n]=x\left[N-n\right]$
             \begin{uebsp_theory}
-            Beachte, dass folgendes gilt:
-            \[e^{j\cdot 2\cdot\pi}=1\]
+                Mit der Eulerschen Formel können wir uns folgedes herleiten:
+                \[e^{j\cdot 2\cdot\pi}=\underbrace{\cos(2\cdot\pi)}_{=1}+\underbrace{j\sin(2\cdot\pi)}_{=0}=1\]
             \end{uebsp_theory}
 
         \begin{eqnarray*}
@@ -48,11 +57,12 @@
             \cancel N\cdot d_k=\cancel N\cdot c_{-k}\\
             &\Rightarrow& \underline{\underline{d_k=c_{-k}}}
         \end{eqnarray*}
-            \begin{uebsp_theory}
-                Hinweis: in Formelsammlung(Fourierreihen zeitdiskreter periodischer Signale) steht:
+        \begin{hint}In Formelsammlung(Fourierreihen zeitdiskreter periodischer Signale) steht:
                 \[x[-n]\Leftrightarrow c_{-k}\]
-                Somit hätte man sich die ganze Berechnung erspart, wenn man erkannt hätte, dass $x[-n]=x[N-n]$.
-            \end{uebsp_theory}
+                Somit hätte man sich die ganze Berechnung erspart, wenn man erkannt hätte, dass 
+                \[x[-n]=x[N-n]\;\;\Leftrightarrow\;\;c_{-k}\]
+                denn das Signal ist ja sowieso $N$-Periodisch.
+            \end{hint}
 
         \item $y[n]=\frac{1}{2}\left(x[n]+x^*\left[N-n\right]\right)$
             \begin{uebsp_theory}
@@ -74,6 +84,14 @@
                 \Rightarrow\cancel N\cdot d_k&=&\cancel N\cdot \Re e\{c_k\}\;\;\Rightarrow\;\;
                 \underline{\underline{d_k=\Re e\{c_{k}\}}}
             \end{eqnarray*}
+        \begin{hint}
+            Hier gibts in der Formelsammlung(Fourierreihen zeidiskreter periodischer Signale) eine nette Formel, die besagt:
+            \[x_e[n]=\frac{1}{2}(x[n]+x^*[-n])\;\;\Leftrightarrow\;\;\Re e\{c_k\}\]
+            Somit kann man das ganze etwas abkürzen, indem man sagt:
+            \[y[n]=\frac{1}{2}(x[n]+\underbrace{x^*[N-n]}_{x^*[-n]})=\frac{1}{2}(x[n]+{x^*[-n]})\;\;\Leftrightarrow\;\;\Re e\{c_k\}\]
+            Da die Funktion $y[n]$ sowieso $N$-periodisch ist.
+        \end{hint}
+
         \stepcounter{enumi}%increment counter by one
         \item $y[n]=x[n]\cos\frac{2\pi L}{M}n,\;\;L$ und $M$ ganzzahlig
             \begin{uebsp_theory}
