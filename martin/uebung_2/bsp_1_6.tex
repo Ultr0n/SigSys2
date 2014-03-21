@@ -47,13 +47,13 @@
             \underbrace{\sum_{k=0}^{N-1}d_{k}}_{N\cdot d_{k}}=\underbrace{\sum_{k=0}^{N-1}c_{-k}}_{N\cdot c_{-k}}\;\;\Rightarrow\;\;
             \cancel N\cdot d_k=\cancel N\cdot c_{-k}\\
             &\Rightarrow& \underline{\underline{d_k=c_{-k}}}
-
+        \end{eqnarray*}
             \begin{uebsp_theory}
                 Hinweis: in Formelsammlung(Fourierreihen zeitdiskreter periodischer Signale) steht:
                 \[x[-n]\Leftrightarrow c_{-k}\]
                 Somit hätte man sich die ganze Berechnung erspart, wenn man erkannt hätte, dass $x[-n]=x[N-n]$.
             \end{uebsp_theory}
-        \end{eqnarray*}
+
         \item $y[n]=\frac{1}{2}\left(x[n]+x^*\left[N-n\right]\right)$
             \begin{uebsp_theory}
                 $x^*[n]$ ist ein konjugiert komplexes Signal:
@@ -78,7 +78,15 @@
         \item $y[n]=x[n]\cos\frac{2\pi L}{M}n,\;\;L$ und $M$ ganzzahlig
         \item $y[n]=x^2[n]$
             \begin{eqnarray*}
-
+                y[n]&=&x^2[n]=x[n]\cdot x[n]= \sum_{k=0}^{N-1}\left(c_ke^{j\frac{2\pi}{N}nk}\right)\cdot \sum_{l=0}^{N-1}\left(c_le^{j\frac{2\pi}{N}nl}\right)=\\
+                y[n]&=& \sum_{k=0}^{N-1}\sum_{l=0}^{N-1}\left(c_ke^{j\frac{2\pi}{N}nk}\right)\cdot \left(c_le^{j\frac{2\pi}{N}nl}\right)=\sum_{k=0}^{N-1}\sum_{l=0}^{N-1}c_k\cdot c_l\cdot e^{j\frac{2\pi}{N}n(k+l)}
+            \end{eqnarray*}
+            Wenn wir nun $k+l$ durch $m$ substituieren: ($k+l=m$) und diese Formel auf $k$ umstellen ($k=m-l$), erhalten wir: (Nicht vergessen, auch die Limits der Summen müssen angepasst werden:)
+            \begin{eqnarray*}
+                y[n]&=& \sum_{m=0}^{2(N-1)}\sum_{l=0}^{N-1}c_{m-l}\cdot c_l\cdot e^{j\frac{2\pi}{N}n\cdot m}\\
+                \sum_{m=0}^{N-1}d_m\cancel{e^{j\frac{2\pi}{N}nm}}&=& \sum_{m=0}^{2(N-1)}\sum_{l=0}^{N-1}c_{m-l}\cdot c_l\cdot \cancel{e^{j\frac{2\pi}{N}n\cdot m}}\;\Rightarrow\;\;
+                \cancel{\sum_{m=0}^{N-1}}d_m= \cancel{\sum_{m=0}^{2(N-1)}}\sum_{l=0}^{N-1}c_{m-l}\cdot c_l\\
+                d_m&=&\sum_{l=0}^{N-1}c_{m-l}\cdot c_l
             \end{eqnarray*}
     \end{enumerate}
 \end{Answer}
