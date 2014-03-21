@@ -76,17 +76,35 @@
             \end{eqnarray*}
         \stepcounter{enumi}%increment counter by one
         \item $y[n]=x[n]\cos\frac{2\pi L}{M}n,\;\;L$ und $M$ ganzzahlig
+            \begin{uebsp_theory}
+                Nicht vergessen auf folgende Beziehung: \[\cos x=\frac{1}{2}\left(e^{jx}+e^{-jx}\right)\]
+            \end{uebsp_theory}
+            \begin{eqnarray*}
+                y[n]&=&x[n]\cdot \cos\frac{2\pi L}{M}n=
+                x[n]\cdot\frac{1}{2}\left(e^{j\frac{2\pi L}{M}n}+e^{-j\frac{2\pi L}{M}n}\right)\\
+                \Rightarrow\;\;d_k&=&\frac{1}{N}\sum_{n=0}^{N-1}y[n]e^{-j\frac{2\pi}{N}nk}=
+                \frac{1}{N}\sum_{n=0}^{N-1}x[n]\cdot\frac{1}{2}\left(e^{j\frac{2\pi L}{M}n}+e^{-j\frac{2\pi L}{M}n}\right)e^{-j\frac{2\pi}{N}nk}\\
+                d_k&=&\frac{1}{2}\frac{1}{N}\sum_{n=0}^{N-1}x[n]\cdot\left(e^{j\frac{2\pi L}{M}n}+e^{-j\frac{2\pi L}{M}n}\right)e^{-j\frac{2\pi}{N}nk}\\
+                d_k&=&\frac{1}{2}\frac{1}{N}\sum_{n=0}^{N-1}x[n]\cdot\left(e^{j2\pi n(\frac{L}{M}-\frac{k}{N})}+e^{-j2\pi n(\frac{L}{M}+\frac{k}{N})}\right)\\
+            d_k&=&\frac{1}{2}\frac{1}{N}\sum_{n=0}^{N-1}x[n]\cdot e^{j2\pi n(\frac{L}{M}-\frac{k}{N})}+\sum_{n=0}^{N-1}x[n]\cdot e^{-j2\pi n(\frac{L}{M}+\frac{k}{N})}\\
+                d_k&=&\frac{1}{2}\left(\underbrace{\frac{1}{N}\sum_{n=0}^{N-1}x[n]\cdot e^{-\frac{j2\pi n}{N}(k-\frac{LN}{M})}}_{c_{k-\frac{LN}{M}}}+\underbrace{\frac{1}{N}\sum_{n=0}^{N-1}x[n]\cdot e^{-\frac{j2\pi n}{N}(k+\frac{LN}{M})}}_{c_{k+\frac{LN}{M}}}\right)\\
+                   &\Rightarrow & \underline{\underline{d_k=\frac{1}{2}\left({c_{k-\frac{LN}{M}}}+{c_{k+\frac{LN}{M}}}\right)}}
+            \end{eqnarray*}
         \item $y[n]=x^2[n]$
             \begin{eqnarray*}
                 y[n]&=&x^2[n]=x[n]\cdot x[n]= \sum_{k=0}^{N-1}\left(c_ke^{j\frac{2\pi}{N}nk}\right)\cdot \sum_{l=0}^{N-1}\left(c_le^{j\frac{2\pi}{N}nl}\right)=\\
                 y[n]&=& \sum_{k=0}^{N-1}\sum_{l=0}^{N-1}\left(c_ke^{j\frac{2\pi}{N}nk}\right)\cdot \left(c_le^{j\frac{2\pi}{N}nl}\right)=\sum_{k=0}^{N-1}\sum_{l=0}^{N-1}c_k\cdot c_l\cdot e^{j\frac{2\pi}{N}n(k+l)}
             \end{eqnarray*}
-            Wenn wir nun $k+l$ durch $m$ substituieren: ($k+l=m$) und diese Formel auf $k$ umstellen ($k=m-l$), erhalten wir: (Nicht vergessen, auch die Limits der Summen müssen angepasst werden:)
+            Wenn wir nun $k+l$ durch $m$ substituieren: ($k+l=m$) und diese Formel auf $k$ umstellen ($k=m-l$):
+            Nicht vergessen, auch die Limits der Summen müssen angepasst werden:\\
+
+            \textbf{Unteres Limit}: $k=m-l\;\;\Rightarrow\;\;0=m-l\;\;\Rightarrow\;\;l=m$\\
+            \textbf{Oberes Limit}: $k=m-l\;\;\Rightarrow\;\;N-1=m-l\;\;\Rightarrow\;\;N-1+l=m$
             \begin{eqnarray*}
-                y[n]&=& \sum_{m=0}^{2(N-1)}\sum_{l=0}^{N-1}c_{m-l}\cdot c_l\cdot e^{j\frac{2\pi}{N}n\cdot m}\\
-                \sum_{m=0}^{N-1}d_m\cancel{e^{j\frac{2\pi}{N}nm}}&=& \sum_{m=0}^{2(N-1)}\sum_{l=0}^{N-1}c_{m-l}\cdot c_l\cdot \cancel{e^{j\frac{2\pi}{N}n\cdot m}}\;\Rightarrow\;\;
-                \cancel{\sum_{m=0}^{N-1}}d_m= \cancel{\sum_{m=0}^{2(N-1)}}\sum_{l=0}^{N-1}c_{m-l}\cdot c_l\\
-                d_m&=&\sum_{l=0}^{N-1}c_{m-l}\cdot c_l
+                y[n]&=& \sum_{m=l}^{N-1+l}\sum_{l=0}^{N-1}c_{m-l}\cdot c_l\cdot e^{j\frac{2\pi}{N}n\cdot m}\\
+                \sum_{m=0}^{N-1}d_m\cancel{e^{j\frac{2\pi}{N}nm}}&=& \sum_{m=l}^{N-1+l}\sum_{l=0}^{N-1}c_{m-l}\cdot c_l\cdot \cancel{e^{j\frac{2\pi}{N}n\cdot m}}\;\Rightarrow\;\;
+                \cancel{\sum_{m=0}^{N-1}}d_m= \cancel{\sum_{m=l}^{N-1+l}}\sum_{l=0}^{N-1}c_{m-l}\cdot c_l\\
+                &\Rightarrow& \underline{\underline{d_m=\sum_{l=0}^{N-1}c_{m-l}\cdot c_l}}
             \end{eqnarray*}
     \end{enumerate}
 \end{Answer}
