@@ -1,0 +1,44 @@
+\section*{Aufgabe 2.1}
+\subsection*{Angabe}
+Beweisen Sie für jedes der durch Eingangs/Ausgangsbeziehungen gegebenen Systeme die Gültigkeit oder Ungültigkeit der Systemeigenschaften \textit{Linearität, Zeitinvarianz, Kausalität, Stabilität.} Wo es möglich ist, geben Sie die Impulsantwort $h\leftn[n\right]$ des Systems an.
+\begin{enumerate}[a)]
+	\item $y[n] = x[n]-x[n-1]$
+	\item $y[n] = x[n]x[n-1]$
+	\item $\displaystyle{y[n] = \sum_{k=n-2}^{n+4}x[k]}$
+	\item $y[n] = x[n] + x[-n]$
+\end{enumerate}
+\subsection*{Lösung}
+\begin{hint}
+	Für lineare Systeme gilt das \textbf{Superpositionsprinzip}.\\
+	\[
+		y\leftn[n\right] = \mathcal{T} \left\{ ax_1 \leftn[n\right] + bx_2 \leftn[n\right] \right\}
+		= a\mathcal{T} \left\{ x_1\leftn[n\right] \right\} + b\mathcal{T} \left\{ x_2 \leftn[n\right] \right\}
+		\quad \forall n,a,b
+	\]
+\end{hint}
+\begin{hint}
+	Bei zeitinvarianten Systemen ändert sich die Form des Ausgangssignals nicht, wenn das Eingangssignal zu verschiedenen Zeitpunkten angelegt wird. Es tritt lediglich eine Zeitverschiebung auf, die gleich jener des Eingangssignal ist. \\
+	Damit erhält man für \textbf{lineare, zeitinvariante Systeme} die grundlegende\\ Eingangs/Ausgangsrelation
+	\[
+		y\leftn[n\right] = \sum_{k=-\infty}^{\infty}x\leftn[n\right]h\leftn[n-k\right]
+		=\sum_{k=-\infty}^{\infty}x\leftn[n-k\right]h\leftn[k\right]
+	\]
+\end{hint}
+\begin{hint}
+	Bei \textbf{kausalen Systemen} eilt die Systemantwort der Systemanregung nicht voraus. Die Systemantwort für jeden Zeitindex $n_0$ hängt nur von Signalwerten $x\leftn[n\right]$ zu Zeitpunkten $n\le n_0$, also von vergangenen Eingangssignalwerten, ab. \\
+	Daraus folgt mit der Faltungssume:
+	\[
+		y\leftn[n_0\right] = \sum_{k=-\infty}^{\infty} h\leftn[k\right]x[\underbrace{n_0-k}_{\le n_0}]
+	\]
+	als Konsequenz für die \textbf{Impulsantwort kausaler Systeme}
+	\[
+		h[n] = 0 \quad \text{für} \quad n < 0
+	\]
+\end{hint}
+\begin{hint}
+	Ein System, für das folgende Gleichung erfüllt ist, wird \textbf{BIBO-stabiles System} (BIBO = Bounded Input Bounded Output) genannt.
+	\[
+		\sum_{k=-\infty}^{\infty}|h\leftn[n\right]|<\infty
+	\]
+	Filter mit einer Impulsantwort endlicher Dauer sind daher immer stabil.
+\end{hint}
