@@ -6,8 +6,11 @@ Beweisen Sie für jedes der durch Eingangs/Ausgangsbeziehungen gegebenen Systeme
 	\item $y[n] = x[n]x[n-1]$
 	\item $\displaystyle{y[n] = \sum_{k=n-2}^{n+4}x[k]}$
 	\item $y[n] = x[n] + x[-n]$
+	\item $y[n] = x[2n]$
+	\item $y[n] = \frac{1}{n+0.5}x[n]$
+	\item $y[n] = x[n-1]+x[n]-x[n+1]$
 \end{enumerate}
-\subsection*{Lösung}
+\subsection*{Theorie}
 \begin{hint}
 	Für lineare Systeme gilt das \textbf{Superpositionsprinzip}.\\
 	\[
@@ -17,12 +20,11 @@ Beweisen Sie für jedes der durch Eingangs/Ausgangsbeziehungen gegebenen Systeme
 	\]
 \end{hint}
 \begin{hint}
-	Bei zeitinvarianten Systemen ändert sich die Form des Ausgangssignals nicht, wenn das Eingangssignal zu verschiedenen Zeitpunkten angelegt wird. Es tritt lediglich eine Zeitverschiebung auf, die gleich jener des Eingangssignal ist. \\
-	Damit erhält man für \textbf{lineare, zeitinvariante Systeme} die grundlegende\\ Eingangs/Ausgangsrelation
+	Ein System heißt dann zeitinvariant, wenn für jede beliebige Zeitverschiebung um $n_0$ gilt:
 	\[
-		y\leftn[n\right] = \sum_{k=-\infty}^{\infty}x\leftn[n\right]h\leftn[n-k\right]
-		=\sum_{k=-\infty}^{\infty}x\leftn[n-k\right]h\leftn[k\right]
+		\mathcal{T}\{x[n-n_0]\} = y[n-n_0]
 	\]
+	Für die Zeitinvarianz muss das Ausgangssignal den Zeitbezug zum Eingangssignal beibehalten und identisch reagieren. Dieses Prinzip wird auch als Verschiebungsprinzip bezeichnet.
 \end{hint}
 \begin{hint}
 	Bei \textbf{kausalen Systemen} eilt die Systemantwort der Systemanregung nicht voraus. Die Systemantwort für jeden Zeitindex $n_0$ hängt nur von Signalwerten $x\leftn[n\right]$ zu Zeitpunkten $n\le n_0$, also von vergangenen Eingangssignalwerten, ab. \\
@@ -34,7 +36,7 @@ Beweisen Sie für jedes der durch Eingangs/Ausgangsbeziehungen gegebenen Systeme
 	\[
 		h[n] = 0 \quad \text{für} \quad n < 0
 	\]
-\end{hint}
+\end{hint} \clearpage
 \begin{hint}
 	Ein System, für das folgende Gleichung erfüllt ist, wird \textbf{BIBO-stabiles System} (BIBO = Bounded Input Bounded Output) genannt.
 	\[
@@ -42,3 +44,138 @@ Beweisen Sie für jedes der durch Eingangs/Ausgangsbeziehungen gegebenen Systeme
 	\]
 	Filter mit einer Impulsantwort endlicher Dauer sind daher immer stabil.
 \end{hint}
+\subsection*{Lösung}
+\begin{enumerate}[a)]
+	\item $y[n] = x[n]-x[n-1]$ \\
+	Zuerst testen wir die Linearität mit dem Superpositionsprinzip. Das Eingangs/Ausgangsverhältnis ist definiert mit:
+	\[
+		y[n] = \mathcal{T}\{x[n]\} = x[n]-x[n-1]
+	\]
+	Für die \textbf{Linearität} muss also gelten:
+	\[
+		y\leftn[n\right] = \mathcal{T} \left\{ ax_1 \leftn[n\right] + bx_2 \leftn[n\right] \right\}
+		= a\mathcal{T} \left\{ x_1\leftn[n\right] \right\} + b\mathcal{T} \left\{ x_2 \leftn[n\right] \right\}
+		\quad \forall n,a,b
+	\]
+	Wenden wir das auf unser Verhältnis an:
+	\begin{align*}
+		\mathcal{T}\{ ax[n] + bx[n] \} &= a\mathcal{T} \{ x[n] \} + b\mathcal{T} \{ x[n] \} \\
+		ax[n] + bx[n] - ax[n-1] - bx[n-1] &= a(x[n]-x[n-1]) + b(x[n]-x[n-1]) \\
+		ax[n] - ax[n-1] + bx[n] - bx[n-1] &= ax[n] - ax[n-1] + bx[n] - bx[n-1] \\
+		&q.e.d.
+	\end{align*}
+	Für die \textbf{Zeitinvarianz} überprüfen wir das Verschiebungsprinzip:
+	\begin{align*}
+		\mathcal{T} \{ x[n-n_0] \} &= y[n-n_0] \\
+		x[n-n_0] - x[n-n_0-1] &= y[n-n_0] \\
+		&q.e.d.
+	\end{align*}
+	Bei \textbf{kausalen Systemen} hängt die Systemantwort nur von vergangenen Eingangssignalwerten ab. Diese Eigenschaften können wir direkt herauslesen. \\
+	Die Impulsantwort $h[n]$ bekommen wir, indem wirals Eingangsignal $x[n] = \delta [n]$ den Dirac-Impuls verwenden.
+	\[
+		h[n] = \delta [n] - \delta [n-1]
+	\]
+	Die Impulsantwort hat eine endliche Dauer und ist \textbf{immer stabil}.
+
+	\item $y[n] = x[n]x[n-1]$
+	\subsubsection*{Linearität}
+		\begin{align*}
+			\mathcal{T}\{ ax[n] + bx[n] \} &= a\mathcal{T} \{ x[n] \} + b\mathcal{T} \{ x[n] \} \\
+			(ax[n] + bx[n])(ax[n-1] + bx[n-1]) &\neq ax[n]x[n-1] + bx[n]x[n-1] \\
+			x[n]x[n-1](a^2+2ab+b^2) &\neq x[n]x[n-1](a+b)
+		\end{align*}
+		Das System ist somit nicht linear.
+	\subsubsection*{Zeitinvarianz}
+		\begin{align*}
+			\mathcal{T} \{ x[n-n_0] \} &= y[n-n_0] \\
+			x[n-n_0]x[n-n_0-1] &= y[n-n_0] \\
+			&q.e.d.
+		\end{align*}
+	 	Das System ist zeitinvariant.
+ 	\subsubsection*{Kausalität}
+	 Die Kausalität ergibt sich aus der Definition. 
+	\subsubsection*{Stabilität}
+	 Für die Impulsantwort gilt:
+	 \[
+	 	h[n] = \delta [n] \delta[n-1]
+	 \]
+	 Sie hat endliche Dauer und ist stabil.
+	\item $\displaystyle{y[n] = \sum_{k=n-2}^{n+4}x[k]}$
+	\subsubsection*{Linearität}
+		\begin{align*}
+			\mathcal{T} \{ ax[n] + bx[n] \} &= a\mathcal{T} \{ x[n] \} + b \mathcal{T} \{ x[n] \} \\
+			\sum_{k=n-2}^{n+4}(ax[k]+bx[k]) &= a\sum_{k=n-2}^{n+4}x[k]+b\sum_{k=n-2}^{n+4}x[k] \\
+			a\sum_{k=n-2}^{n+4}x[k]+b\sum_{k=n-2}^{n+4}x[k] &= a\sum_{k=n-2}^{n+4}x[k]+b\sum_{k=n-2}^{n+4}x[k] \\
+			&q.e.d.
+		\end{align*}
+		Das System ist linear.
+	\subsubsection*{Zeitinvarianz}
+		\begin{align*}
+			\mathcal{T} \{ x[n-n_0] \} &= y[n-n_0] \\
+			\sum_{k=n-n_0-2}^{n-n_0+4}x[k] &= y[n-n_0]
+		\end{align*}
+		Das System ist zeitinvariant.
+	\subsubsection*{Kausalität}
+		Die Kausalität ist hier nicht gegeben, da $y[n]$ unter anderem von $x[n-2]$ abhängt.
+	\subsubsection*{Stabilität} 
+		Die Impulsantwort ist:
+		\[
+			h[n] = \sum_{k=n-2}^{n+4}\delta [k] = \delta [n-2] + \delta [n-1] + \delta [n] + \delta [n+1] + \delta [n+2] + \delta [n+3] + \delta [n+4]
+		\]
+		Laut Beispielsammlung-Lösung wäre dies:
+		\[
+			h[n] = \sigma[n+4]\cdot \sigma[n-2]
+		\]
+		Meiner Meinung nach wäre
+		\[
+			h[n] = \sigma[n+4]-\sigma[n-2]
+		\]
+		genauso korrekt.
+	\item $y[n] = x[n] + x[-n]$
+	\subsubsection*{Linearität}
+		\begin{align*}
+			\mathcal{T} \{ ax[n]+bx[n] \} &= a\mathcal{T} \{ x[n] \}+ b \mathcal{T} \{ x[n] \} \\
+			ax[n]+bx[n]+ax[-n]+bx[-n] &= a(x[n]+x[-n])+b(x[n]+x[-n]) \\
+			a(x[n]+x[-n])+b(x[n]+x[-n]) &= a(x[n]+x[-n])+b(x[n]+x[-n]) \\
+			&q.e.d.
+		\end{align*}
+	\subsubsection*{Zeitinvarianz}
+		\[ y[n] = x[n] + x[-n] = \mathcal{T} \{ x[n] \} \]
+		\[ \mathcal{T} \{ x[n-n_0] \} = x[n-n_0] + x[-n+n_0] \neq y[n-n_o] = x[n-n_0] + x[-n-n_0] \]
+		Das System ist nicht zeitinvariant.
+	\subsubsection*{Kausalität}
+		Setzen wir für $n$ Werte $<0$ ein, würde unser Ausgangssignal $y[n]$ von Werten $n_0 > n$ abhängen. Das System ist nicht kausal.
+	\subsubsection*{Stabilität}
+		Wenn $|x[n]|<M$, dann gilt auch $|x[n]+x[-n]| < M$ und somit $|y[n]|<M$. Das System ist stabil.
+	\item $y[n] = x[2n]$
+	\subsubsection*{Linearität}
+		\begin{align*}
+			\mathcal{T} \{ ax[n]+bx[n] \} &= a\mathcal{T} \{ x[n] \}+ b \mathcal{T} \{ x[n] \} \\
+			ax[2n]+bx[2n] &= ax[2n]+bx[2n] \\
+			&q.e.d.
+		\end{align*}
+	\subsubsection*{Zeitinvarianz}
+		\[ y[n] = x[2n] = \mathcal{T} \{ x[n] \} \]
+		\[ \mathcal{T} \{ x[n-n_0] \} = x[2n-2n_0] \neq y[n-n_o] = x[2n-n_0] \]
+		Das System ist nicht zeitinvariant.
+	\subsubsection*{Kausalität}
+		Das System ist offensichtlich nicht kausal.
+	\subsubsection*{Stabilität}
+		Wenn $|x[n]|<M$, dann gilt auch $|x[2n]| < M$ und somit $|y[n]|<M$. Das System ist stabil.
+	\item $y[n] = \frac{1}{n+0.5}x[n]$
+	\subsubsection*{Linearität}
+		\begin{align*}
+			\mathcal{T} \{ ax[n]+bx[n] \} &= a\mathcal{T} \{ x[n] \}+ b \mathcal{T} \{ x[n] \}
+		\end{align*}
+	\subsubsection*{Zeitinvarianz}
+	\subsubsection*{Kausalität}
+	\subsubsection*{Stabilität}
+	\item $y[n]=x[n-1]+x[n]-x[n+1]$
+	\subsubsection*{Linearität}
+		\begin{align*}
+			\mathcal{T} \{ ax[n]+bx[n] \} &= a\mathcal{T} \{ x[n] \}+ b \mathcal{T} \{ x[n] \}
+		\end{align*}
+	\subsubsection*{Zeitinvarianz}
+	\subsubsection*{Kausalität}
+	\subsubsection*{Stabilität}
+\end{enumerate}
