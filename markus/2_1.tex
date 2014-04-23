@@ -165,17 +165,37 @@ Beweisen Sie für jedes der durch Eingangs/Ausgangsbeziehungen gegebenen Systeme
 	\item $y[n] = \frac{1}{n+0.5}x[n]$
 	\subsubsection*{Linearität}
 		\begin{align*}
-			\mathcal{T} \{ ax[n]+bx[n] \} &= a\mathcal{T} \{ x[n] \}+ b \mathcal{T} \{ x[n] \}
+			\mathcal{T} \{ ax[n]+bx[n] \} &= a\mathcal{T} \{ x[n] \}+ b \mathcal{T} \{ x[n] \} \\
+			\frac{1}{n+0.5}(ax[n]+bx[n]) &= \frac{a}{n+0.5}x[n] + \frac{b}{n+0.5}x[n] \\
+			\frac{a}{n+0.5}x[n]+\frac{b}{n+0.5}x[n] &= \frac{a}{n+0.5}x[n] + \frac{b}{n+0.5}x[n] \\
+			&q.e.d.
 		\end{align*}
 	\subsubsection*{Zeitinvarianz}
+		\[ y[n] = \frac{1}{n+0.5}x[n] = \mathcal{T}\{ x[n] \} \]
+		\[ \mathcal{T} \{ x[n-n_0] \} = \frac{1}{n-n_0+0.5}x[n-n_0] \neq y[n-n_0] = \frac{1}{n+0.5}x[n-n_0] \]
+		Das System ist nicht zeitinvariant.
 	\subsubsection*{Kausalität}
+		Da das Ausgangssignal nur von gleichen oder vergangenen Eingangswerten besteht, ist das System kausal.
 	\subsubsection*{Stabilität}
+		Wenn $|x[n]|<M$, dann gilt auch $|\frac{1}{n+0.5}x[n]|<M$ und somit $|y[n]|<M$. Das System ist stabil.
 	\item $y[n]=x[n-1]+x[n]-x[n+1]$
 	\subsubsection*{Linearität}
+		\[ \mathcal{T} \{ ax[n]+bx[n] \} = a\mathcal{T} \{ x[n] \}+ b \mathcal{T} \{ x[n] \} \]
 		\begin{align*}
-			\mathcal{T} \{ ax[n]+bx[n] \} &= a\mathcal{T} \{ x[n] \}+ b \mathcal{T} \{ x[n] \}
+			ax[n-1]+bx[n-1]+ax[n]+bx[n]-ax[n+1]-bx[n+1] & \\
+								= a(x[n-1]+x[n]-x[n+1])&+b(x[n-1]+x[n]-x[n+1])
 		\end{align*}
+		\[ (x[n-1]+x[n]-x[n+1])(a+b) = (x[n-1]+x[n]-x[n+1])(a+b) \]
+		\[ q.e.d. \]
 	\subsubsection*{Zeitinvarianz}
+		\[ y[n] = x[n-1]+x[n]-x[n+1] = \mathcal{T} \{ x[n] \} \]
+		\[ \mathcal{T} \{ x[n-n_0] \} = x[n-n_0-1]+x[n-n_0]-x[n-n_0+1] = y[n-n_0] \]
+		Das System ist zeitinvariant.
 	\subsubsection*{Kausalität}
+		$y[n]$ hängt von $x[n+1]$ ab, das System ist nicht kausal.
 	\subsubsection*{Stabilität}
+		Wenn $|x[n]| < M, \forall n$, dann ist auch $|x[n-1]+x[n]-x[n+1]|<M$ und somit auch $|y[n]|<M$.
+	\subsubsection*{Impulsantwort}
+		Die Impulsantwort ist gegeben mit:
+		\[ h[n] = \delta [n-1] + \delta [n] - \delta[n+1] \]
 \end{enumerate}
