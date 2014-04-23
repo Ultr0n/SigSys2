@@ -1,0 +1,127 @@
+\begin{uebsp}
+\begin{Exercise}
+Das abgebildete System besteht aus zwei LTI–Systemen mit den Impulsantworten
+$h_1[n]$ und $h_2[n]$. Berechnen Sie die Antwort $y[n]$ des Gesamtsystems auf
+das Eingangssignal $x[n] = \delta[n] - \alpha \delta[n - 1], |\alpha| < 1$.
+\begin{center}
+\begin{tikzpicture}
+    \matrix[row sep=0.5cm, column sep=0.5cm] {
+        \node (input) {};&
+        \node (h1) [block] {$h_1[n]$};&&
+        \node (h2) [block] {$h_2[n]$};&
+        \node (output) {};\\
+        &\node (h1formula) {$h_1[n]=\left(\dfrac{1}{2}\right)^{|n|}\left(\sin\dfrac{\pi}{10}n\right)^2$}; &
+        &\node (h2formula) {$h_2[n]=\alpha^n\sigma[n]$}; &\\
+    };
+    \draw [draw,->] (input) -- node[above] {$x[n]$} (h1);
+    \draw [draw,->] (h1) -- (h2);
+    \draw [draw,->] (h2) -- node[above] {$y[n]$} (output);
+\end{tikzpicture}
+\end{center}
+\end{Exercise}
+\begin{Answer}
+    \begin{definition}[$\delta$-Einsimpuls]
+        \[\delta[n]=\begin{cases}1 & n=0\\0 & n\neq 0\end{cases}\]
+    \end{definition}
+    \begin{definition}[$\sigma$-Sprungfunktion]
+        \[\sigma[n]=\begin{cases}0 & \text{für }n<0\\1& \text{für }n\geq 0\end{cases}\]
+    \end{definition}
+
+    \begin{uebsp_theory}
+        Das Ausgangssignal $y[n]$ eines linearen, zeitinvarianten Systems mit der Sprungantwort $h[n]$ und dem Eingangssignal $x[n]$ kann mit folgender Formel berechnet werden:
+        \[y[n]=\sum_{k=-\infty}^\infty x[k]h[n-k]=\sum_{k=-\infty}^\infty x[n-k]h[k]\]
+    \end{uebsp_theory}
+    \begin{uebsp_theory}
+        Ein System heißt BIBO(Bounded Input, Boundend Output)-Stabil, wenn gilt:
+        \[\sum_{k=-\infty}^\infty\left|h[k]\right|<\infty\]
+        $\Rightarrow$ Systeme mit endlich langer Impulsantwort sind immer stabil.
+    \end{uebsp_theory}
+    \begin{uebsp_theory}
+        Bei der Kettenschaltung (Kaskadenschaltung (Reihenschaltung)) 2-er
+        stabiler LTI-Systeme mit Impulsantworten $h_1[n]$ und $h_2[n]$ folgt:
+        \[h[n]=\sum_{k=-\infty}^\infty h_1[k]h_2[n-k]=\sum_{k=-\infty}^\infty h_1[n-k]h_2[k]\]
+        $\Rightarrow$ Es ist die Reihenfolge der Systeme egal:
+        \begin{center}
+        \begin{tikzpicture}
+            \matrix[row sep=0.5cm, column sep=0.3cm] {
+                \node (inputa) {};&
+                \node (h1a) [block] {$h_1[n]$};&
+                \node (h2a) [block] {$h_2[n]$};&
+                \node (outputa) {};&
+                \node (equa) {=};&
+                \node (inputb) {};&
+                \node (h1b) [block] {$h_1[n]$};&
+                \node (h2b) [block] {$h_2[n]$};&
+                \node (outputb) {};&
+                \node (equa) {=};&
+                \node (inputc) {};&
+                \node (h) [block] {$h[n]$};&
+                \node (outputc) {};\\
+            };
+            \draw [draw,->] (inputa) -- (h1a);
+            \draw [draw,->] (h1a) -- (h2a);
+            \draw [draw,->] (h2a) -- (outputa);
+            \draw [draw,->] (inputb) -- (h1b);
+            \draw [draw,->] (h1b) -- (h2b);
+            \draw [draw,->] (h2b) -- (outputb);
+            \draw [draw,->] (inputc) -- (h);
+            \draw [draw,->] (h) -- (outputc);
+
+        \end{tikzpicture}
+        \end{center}
+    \end{uebsp_theory}
+    \begin{enumerate}[i)]
+        \item Prüfen, ob alle Systeme BIBO-Systeme sind:
+            \begin{eqnarray*}x[n] &=& \delta[n] - \alpha \delta[n - 1]\;\;\Rightarrow\;\;
+                \sum_{k=-\infty}^\infty\left|\underbrace{\delta[k]}_{=1\text{ für }k=0} - \alpha \underbrace{\delta[k - 1]}_{=1\text{ für }k=1}\right|\;\;\;\fbox{\begin{minipage}{0.17\textwidth}$\Rightarrow$ mit $k=0$ bzw. $k=1\;\Rightarrow$ \end{minipage}}\\
+                 &\Rightarrow& \left|1-\alpha\right|<\infty\;\;\forall|\alpha|<1\\
+            h_1[n]&=&\left(\frac{1}{2}\right)^{|n|}\left(\sin\frac{\pi}{10}n\right)^2\;\;\Rightarrow\;\;
+                \lim_{n\rightarrow\infty}h_1[n]=0\;\;\Rightarrow\;\;\\
+                &\Rightarrow&\sum_{k=-\infty}^\infty\left|\left(\frac{1}{2}\right)^{|k|}\left(\sin\frac{\pi}{10}k\right)^2\right|<\infty\\
+            h_2[n]&=&\alpha^n\sigma[n]\;\;\Rightarrow\;\;
+                \lim_{n\rightarrow\infty}h_2[n]=0\;\;\Rightarrow\;\;
+                \sum_{k=-\infty}^\infty\left|\alpha^n\sigma[n]\right|<\infty
+            \end{eqnarray*}
+        D.h. alle Systeme sind BIBO-Systeme.
+        \item Umstellen der Reihenfolge auf folgende Form: (Ist möglich, da alles BIBO-Systeme sind)
+            \begin{center}
+            \begin{tikzpicture}
+                \matrix[row sep=0.5cm, column sep=0.5cm] {
+                    \node (input) {};&
+                    \node (h2) [block] {$h_2[n]$};&
+                    \node [above, red] {$y_1[n]$};&
+                    \node (h1) [block] {$h_1[n]$};&
+                    \node (output) {};\\
+                    &\node (h2formula) {$h_2[n]=\alpha^n\sigma[n]$}; &
+                    &\node (h1formula) {$h_1[n]=\left(\dfrac{1}{2}\right)^{|n|}\left(\sin\dfrac{\pi}{10}n\right)^2$}; &\\
+                };
+                \draw [draw,->] (input) -- node[above] {$x[n]$} (h2);
+                \draw [draw,->] (h2) -- (h1);
+                \draw [draw,->] (h1) -- node[above] {$y[n]$} (output);
+            \end{tikzpicture}
+            \end{center}
+            \begin{uebsp_theory}
+                Im folgenden muss oft die folgende (oder eine ähnliche) Gleichung gelöst werden:
+                \[y[n]=\sum_{k=-\infty}^\infty\delta[k]x[n-k]\]
+                Es ist ersichtlich, dass $\delta[k]$ nur an der Stelle $k=0$ den Wert $1$ annimmt, ansonsten ist sie immer $0$.
+
+                Somit kann man das Summenzeichen vereinfachen, denn alle Summanden außer dem, bei dem $k=0$, sind 0.
+                \[y[n]=\sum_{k=0}^0\delta[k]x[n-k]=\left.\delta[k]x[n-k]\right|_{k=0}=\underbrace{\delta[0]}_{=1}x[n-0]=x[n]\]
+            \end{uebsp_theory}
+        \item Berechnen von $y_1[n]$:
+            \begin{eqnarray*}
+                y_1[n] &=& \sum_{k=-\infty}^{\infty}\left(x[k]h_2[n-k]\right)=
+                \sum_{k=-\infty}^{\infty}\left(\delta[k] - \alpha \delta[k - 1]\right)\alpha^{n-k}\sigma[n-k]\\
+                y_1[n] &=& \sum_{k=-\infty}^{\infty}\underbrace{\delta[k]}_{=1\text{ für } k=0}\alpha^{n-k}\sigma[n-k] -\sum_{k=-\infty}^{\infty} \alpha \underbrace{\delta[k - 1]}_{=1\text{ für } k=1}\alpha^{n-k}\sigma[n-k]\\
+                y_1[n] &=& \alpha^n\sigma[n]-\alpha\cdot\alpha^{n-1}\sigma[n-1] = \alpha^n\underbrace{(\sigma[n]-\sigma[n-1])}_{\delta[n]}=\alpha^n\cdot \underbrace{\delta[n]}_{=1\text{ für }n=0}\\
+                y_1[n] &=& \alpha^0\cdot \delta[n] = \delta[n]
+            \end{eqnarray*}
+        \item Berechnen von $y[n]$:
+            \begin{eqnarray*}
+                y[n] &=& \sum_{k=-\infty}^{\infty}\left(y_1[k]h_1[n-k]\right)=
+                \sum_{k=-\infty}^{\infty}\underbrace{\delta[k]}_{=1\text{ für }k=0}h_1[n-k]\;\;\;\fbox{$\Rightarrow$ mit $k=0$ folgt:}\\
+                y[n] &=&h_1[n-0]=h_1[n]\\
+            \end{eqnarray*}
+    \end{enumerate}
+\end{Answer}
+\end{uebsp}

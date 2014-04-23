@@ -1,0 +1,202 @@
+\begin{uebsp}
+\begin{Exercise}
+Berechnen Sie die Gesamtimpulsantwort $h[n]$ des abgebildeten Systems, das aus einzelnen
+LTI–Systemen zusammengesetzt ist.
+\begin{center}
+\begin{tikzpicture}[auto, node distance=2cm,>=latex']
+    \node [input, name=input] {};
+    \node [block, right of=input] (h1){$h_1[n]$};
+    \node [point, right=0.5cm of h1] (split){};
+    \node [block, below right=0.25cm and 0.5cm of split] (h3) {$h_3[n]$};
+    \node [right=0.5cm of h3] (h35){};
+    \node [block, right=0.5cm of h35] (h4) {$h_4[n]$};
+    \node [block, above=1cm of h35] (h2) {$h_2[n]$};
+    \node [sum, right=5cm of split] (sum) {+};
+    \node [output, right=3cm of sum] (output) {};
+
+    \draw [draw,->] (input) -- node {$x[n]$} (h1);
+    \draw [draw] (h1) -- (split);
+    \draw [draw,->] (split) |- (h2.west);
+    \draw [draw,->] (split) |- (h3);
+    \draw [draw,->] (h3) -- (h4);
+    \draw [draw,->] (h4) -| node[above left] {-} (sum);
+    \draw [draw,->] (h2) -| (sum);
+    \draw [draw,->] (sum) -- node {$y[n]=(x*h)[n]$} (output);
+\end{tikzpicture}
+\end{center}
+Dabei sei:
+\begin{eqnarray*}
+    h_1[n]&=&\left(\frac{1}{2}\right)^n\sigma[n]\\
+    h_2[n]&=&(n+1)\sigma[n]\\
+    h_3[n]&=&h_2[n]\\
+    h_4[n]&=&\delta[n-1]
+\end{eqnarray*}
+\end{Exercise}
+\begin{Answer}
+    \begin{definition}[$\delta$-Einsimpuls]
+        \[\delta[n]=\begin{cases}1 & n=0\\0 & n\neq 0\end{cases}\]
+    \end{definition}
+    \begin{definition}[$\sigma$-Sprungfunktion]
+        \[\sigma[n]=\begin{cases}0 & \text{für }n<0\\1& \text{für }n\geq 0\end{cases}\]
+    \end{definition}
+    \begin{uebsp_theory}
+        Das Ausgangssignal $y[n]$ eines linearen, zeitinvarianten Systems mit der Sprungantwort $h[n]$ und dem Eingangssignal $x[n]$ kann mit folgender Formel berechnet werden:
+        \[y[n]=\sum_{k=-\infty}^\infty x[k]h[n-k]=\sum_{k=-\infty}^\infty x[n-k]h[k]\]
+    \end{uebsp_theory}
+    \begin{uebsp_theory}
+        Bei der Kettenschaltung (Kaskadenschaltung (Reihenschaltung)) 2-er 
+        stabiler LTI-Systeme mit Impulsantworten $h_1[n]$ und $h_2[n]$ folgt:
+        \[h[n]=\sum_{k=-\infty}^\infty h_1[k]h_2[n-k]=\sum_{k=-\infty}^\infty h_1[n-k]h_2[k]\]
+        $\Rightarrow$ Es ist die Reihenfolge der Systeme egal:
+        \begin{center}
+        \begin{tikzpicture}
+            \matrix[row sep=0.5cm, column sep=0.3cm] {
+                \node (inputa) {};&
+                \node (h1a) [block] {$h_1[n]$};&
+                \node (h2a) [block] {$h_2[n]$};&
+                \node (outputa) {};&
+                \node (equa) {=};&
+                \node (inputb) {};&
+                \node (h1b) [block] {$h_1[n]$};&
+                \node (h2b) [block] {$h_2[n]$};&
+                \node (outputb) {};&
+                \node (equa) {=};&
+                \node (inputc) {};&
+                \node (h) [block] {$h[n]$};&
+                \node (outputc) {};\\
+            };
+            \draw [draw,->] (inputa) -- (h1a);
+            \draw [draw,->] (h1a) -- (h2a);
+            \draw [draw,->] (h2a) -- (outputa);
+            \draw [draw,->] (inputb) -- (h1b);
+            \draw [draw,->] (h1b) -- (h2b);
+            \draw [draw,->] (h2b) -- (outputb);
+            \draw [draw,->] (inputc) -- (h);
+            \draw [draw,->] (h) -- (outputc);
+
+        \end{tikzpicture}
+        \end{center}
+    \end{uebsp_theory}
+    \begin{uebsp_theory}
+        Bei der Paralellschaltung 2-er LTI-Systeme mit Impulsantworten 
+        $h_1[n]$ und $h_2[n]$ folgt:
+        \[h[n]=h_1[n]+h_2[n]\]
+        \begin{center}
+        \begin{tikzpicture}
+            \node [input, name=inputa] {};
+            \node [point, right=0.5cm of inputa] (split){};
+            \node [block, below right=0.25cm and 0.5cm of split] (h1) {$h_1[n]$};
+            \node [block, above=0.5cm of h1] (h2) {$h_2[n]$};
+            \node [sum, right=2.2cm of split] (sum) {+};
+            \node [output, right of=sum] (outputa) {};
+            \node [right=1cm of outputa] (equ){=};
+            \node [input, right=1cm of equ] (inputb){};
+            \node [block, right=0.5cm of inputb] (h){h[n]};
+            \node [output, right of=h] (outputb) {};
+
+            \draw [draw,->] (inputa) -- (split);
+            \draw [draw,->] (split) |- (h1);
+            \draw [draw,->] (split) |- (h2);
+            \draw [draw,->] (h2) -| (sum);
+            \draw [draw,->] (h1) -| (sum);
+            \draw [draw,->] (sum) -- (outputa);
+            \draw [draw,->] (inputb) -- (h);
+            \draw [draw,->] (h) -- (outputb);
+
+        \end{tikzpicture}
+        \end{center}
+    \end{uebsp_theory}
+
+    \textbf{TODO: wieso ist $h_3$ und $h_4$ stabil?}
+    
+    Am besten man zerlegt das gesamte System in kleine Teile:
+    \begin{enumerate}[i)]
+        \item Zusammenfassen und Berechnen der Serienschaltung von $h_3[n]$ und 
+            $h_4[n]$ als $h_{34}[n]$:
+            \begin{center}
+            \begin{tikzpicture}[auto, node distance=2cm,>=latex']
+                \node [input, name=input] {};
+                \node [block, right=0.5cm of input] (h3) {$h_3[n]$};
+                \node [block, right=0.5cm of h3] (h4) {$h_4[n]$};
+                \node [output, right=0.5cm of h4] (output) {};
+
+                \draw [draw,->] (input) -- (h3);
+                \draw [draw,->] (h3) -- (h4);
+                \draw [draw,->] (h4) -- (output);
+            \end{tikzpicture}
+            \end{center}
+            Aus der Formel für die Reihenschaltung folgt:
+        \begin{eqnarray*}
+            h_{34}[n]&=&\sum_{k=-\infty}^\infty h_3[k]h_4[n-k]=
+                \sum_{k=-\infty}^\infty (k+1)\sigma[k]\cdot
+                \underbrace{\delta[n-k-1]}_{=1\text{ für }k=n-1}\\
+                h_{34}[n]&=&(n\cancel-1\cancel+1)\sigma[n-1]=n\sigma[n-1]
+        \end{eqnarray*}
+        \item Zusammenfassen und Berechnen der Paralellschaltung von $h_2[n]$ und 
+            $h_{34}[n]$ als $h_{2||34}[n]$:
+            \begin{center}
+            \begin{tikzpicture}
+                \node [input, name=inputa] {};
+                \node [point, right=0.5cm of inputa] (split){};
+                \node [block, below right=0.25cm and 0.5cm of split] (h34)
+                {$h_{34}[n]$};
+                \node [block, above=0.5cm of h34] (h2) {$h_2[n]$};
+                \node [sum, right=2.2cm of split] (sum) {+};
+                \node [output, right of=sum] (outputa) {};
+
+                \draw [draw,->] (inputa) -- (split);
+                \draw [draw,->] (split) |- (h1);
+                \draw [draw,->] (split) |- (h2);
+                \draw [draw,->] (h2) -| (sum);
+                \draw [draw,->] (h1) -|node[above left] {-} (sum);
+                \draw [draw,->] (sum) -- (outputa);
+            \end{tikzpicture}
+            \end{center}
+            Aus der Formel für die Reihenschaltung folgt:
+        \begin{eqnarray*}
+            h_{2||34}[n]&=&h_2[n]-h_{34}[n]=(n+1)\sigma[n]-n\sigma[n-1]=\underbrace{n\sigma[n]-n\sigma[n-1]}_{n\delta[n]}+\sigma[n]\\
+            h_{2||34}[n]&=&n\delta[n]+\sigma[n]
+        \end{eqnarray*}
+        \item Zusammenfassen und Berechnen der Serienschaltung von $h_1[n]$ und 
+            $h_{2||34}[n]$ als $h[n]$:
+            \begin{center}
+            \begin{tikzpicture}[auto, node distance=2cm,>=latex']
+                \node [input, name=input] {};
+                \node [block, right=0.5cm of input] (h1) {$h_{1}[n]$};
+                \node [block, right=0.5cm of h1] (h234) {$h_{2||34}[n]$};
+                \node [output, right=0.5cm of h234] (output) {};
+
+                \draw [draw,->] (input) -- (h1);
+                \draw [draw,->] (h1) -- (h234);
+                \draw [draw,->] (h234) -- (output);
+            \end{tikzpicture}
+            \end{center}
+            \begin{definition}[Geometrische Reihe]
+                \[\sum_{n=0}^\infty a^n=\frac{1}{1-a}\;\;\forall
+                    |a|<1\;\;\;\;\text{ und }\;\;\;\;
+                    \sum_{n=0}^{N-1} a^n=\begin{cases}N&a=1\\
+                        \frac{1-a^N}{1-a}&\text{sonst }\forall N\geq0\end{cases}\]
+            \end{definition}
+            \begin{eqnarray*}
+                h[n]&=&\sum_{k=-\infty}^\infty h_1[k]h_{2||34}[n-k]=
+                \sum_{k=-\infty}^\infty \left(\frac{1}{2}\right)^k\sigma[k]
+                ((n-k)\delta[n-k]+\sigma[n-k])\\
+                h[n]&=&\sum_{k=-\infty}^\infty \left(\frac{1}{2}\right)^k\sigma[k]
+                (n-k)\underbrace{\delta[n-k]}_{=1\text{ für
+                }k=n}+\sum_{k=-\infty}^\infty
+                \left(\frac{1}{2}\right)^k\sigma[k]\sigma[n-k]\\
+                h[n]&=&\left(\frac{1}{2}\right)^n\sigma[n]\underbrace{(n-n)}_{=0}+\sum_{k=-\infty}^\infty
+                \left(\frac{1}{2}\right)^k\underbrace{\sigma[k]}_{=1\text{ für
+                }k\geq0\;\;}\underbrace{\sigma[n-k]}_{\;\;=1\text{ für }n\geq
+            k}\fbox{\begin{minipage}{0.2\linewidth}Somit geht $\sum$ von
+            $k=0$ bis $n$\end{minipage}}\\
+            h[n]&=&\underbrace{\sum_{k=0}^n\left(\frac{1}{2}\right)^k}_{\text{Geom.
+            Reihe}}=\frac{1-\left(\frac{1}{2}\right)^{n+1}}{1-\frac{1}{2}}=
+            \frac{1-\left(\frac{1}{2}\right)^{n+1}}{\frac{1}{2}}=
+            2-\cancel2\left(\frac{1}{2}\right)^{n\cancel{+1}}\\
+            h[n]&=&2-\left(\frac{1}{2}\right)^n\;\;\;\forall
+            n\geq0\;\;\;\Rightarrow\;\;\;h[n]=\left(2-\left(\frac{1}{2}\right)^n\right)\sigma[n]
+            \end{eqnarray*}
+        \end{enumerate}
+    \end{Answer}
+\end{uebsp}

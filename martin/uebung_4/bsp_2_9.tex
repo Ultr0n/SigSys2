@@ -1,0 +1,267 @@
+\begin{uebsp}
+\begin{Exercise}
+Sie sollen ein zeitdiskretes System untersuchen, von dem die Beziehung zwischen
+Eingangssignal $x[n]$ und Ausgangssignal $y[n]$ gegeben ist:
+\[y[n]=\sum_{k=n-1}^{n+1}(x[k+1]-x[k]+x[k-1])\]
+\begin{enumerate}[a)]
+    \item Prüfen Sie (mit Beweis), ob das System die folgenden Eigenschaften besitzt:
+        \begin{enumerate}[1)]
+            \item Linearität,
+            \item Kausalität,
+            \item Stabilität,
+            \item Zeitinvarianz.
+        \end{enumerate}
+    \item Berechnen und skizzieren Sie die Impulsantwort und die Übertragungsfunktion 
+        des Systems.
+    \item Welches Ausgangssignal liefert das System für $x[n] = (-1)^n\;\;\forall n$?
+    \item Nun wird das System mit dem Signal $x[n] = \lambda^n$ angeregt.
+        Wie ist $\lambda$ zu wählen, damit $y[n] \equiv 0$ ist?
+    \item Geben Sie eine Realisierung des Systems an.
+\end{enumerate}
+\end{Exercise}
+\begin{Answer}
+    Als erstes werde ich die Formel für $y[n]$ etwas vereinfachen:
+    \begin{eqnarray*}
+        y[n]&=&\sum_{k=n-1}^{n+1}(x[k+1]-x[k]+x[k-1]\\
+        y[n]&=&x[n-1+1]-\cancel{x[n-1]}+x[n-1-1]+\cancel{x[n+1]}-x[n]+\cancel{x[n-1]}\\
+            &&\;\;+x[n+1+1]-\cancel{x[n+1]}+x[n+1-1]\\
+        y[n]&=&x[n]+x[n-2]-\cancel{x[n]}+x[n+2]+\cancel{x[n]}\\
+        y[n]&=&x[n-2]+x[n]+x[n+2]\\
+    \end{eqnarray*}
+    \begin{uebsp_theory}
+        Ein zeitdiskretes System verarbeitet das Eingangssignal $x[n]$ durch
+        Anwendung eines zeitdiskret arbeitenden Algorithmus
+        $\mathcal{T}\{\cdot\}$ zu einem Ausgangssignal $y[n]$.
+        \begin{center}
+        \begin{tikzpicture}
+            \matrix[row sep=0.5cm, column sep=3.5cm] {
+                \node (input) {};&
+                \node (T) [block] {$\mathcal{T}\{\cdot\}$};&
+                \node (output) {};\\
+            };
+            \draw [draw,->] (input) node[above] {$x[n]$} -- (T);
+            \draw [draw,->] (T) -- node[above] {$y[n]=\mathcal{T}\{x[n]\}$} (output);
+        \end{tikzpicture}
+        \end{center}
+    \end{uebsp_theory}
+    \begin{enumerate}[a)]
+        \item Prüfen Sie (mit Beweis), ob das System die folgenden Eigenschaften besitzt:
+
+            Generell gilt lt. Tutor: sobald die Impulsantwort berechenbar ist,
+            handelt es sich um ein LTI-System, somit sind die 2 Bedingungen
+            Linearität und Zeitinvarianz immer erfüllt, wenn die Impulsantwort
+            berechenbar ist. (siehe \fref{item:impulsantwort})
+            \begin{enumerate}[1)]
+                \item Linearität,
+                    \begin{definition}[Linearität(Superpositionsprinzip)]:\\
+                        Bei einem linearen System ist die Antwort auf eine Summe
+                        von Eingangssignalen gleich der Summe der
+                        Einzelantworten:
+                        \[y[n]=\mathcal{T}\left\{\sum_ia_ix_i[n]\right\}
+                            =\sum_ia_i\mathcal{T}\left\{x_i[n]\right\}
+                        =\sum_ia_iy_i[n]\]
+                        \[x[n]=\sum_i a_ix_i[n]\;\;\Rightarrow\;\;y[n]=\sum_ia_iy_i[n]\]
+                        Zusätzlich besitzen lin. Systeme noch folgende
+                        Eigenschaft:
+                        \[x[n]\equiv0\;\;\Rightarrow\;\;y[n]\equiv0\]
+                    \end{definition}
+                    Wir ersetzen einfach überall $x[n]$ durch $\sum_ia_ix_i[n]$:
+                \begin{eqnarray*}
+                    y[n]&=&x[n-2]+x[n]+x[n+2]\;\;\Rightarrow\;\;\fbox{setze $x[n]=\sum_ia_ix_i[n]$}\\
+                    y[n]&=&\sum_ia_ix_i[n-2]+\sum_ia_ix_i[n]+\sum_ia_ix_i[n+2]\\
+                    y[n]&=&\sum_ia_i\underbrace{(x_i[n-2]+x_i[n]+x_i[n+2])}_{y_i[n]}\\
+                    y[n]&=&\sum_ia_i{y_i[n]}\;\;\Rightarrow\;\;\fbox{linear}
+                \end{eqnarray*}
+                Da $y[n]=\sum_ia_i{y_i[n]}$ das Ergebnis ist, das rauskommen
+                muss, wenn es sich um ein lineares System handelt, muss es
+                folglich linear sein.
+                \item Kausalität,
+                    \begin{definition}[Kausalität]:\\
+                        Bei kausalen Systemen eilt die Systemantwort der
+                        Systemanregung nicht vorraus. Die Systemantwort hängt
+                        nur von den vergangenen Eingangssignalwerten ab.
+                        \[h[n]=0\;\;\forall\;\;n<0\]
+                        Wobei $h[n]$ die Impulsantwort darstellt.
+                    \end{definition}
+                    Da die Impulsantwort folgende ist: (Berechnung und Plot, siehe \fref{item:impulsantwort})
+                    \[h[n]=\delta[n-2]+\delta[n]+\delta[n+2]\]
+                    Ist leicht ersichtlich, dass $h[n]\neq0$ für $n<0$:
+                    z.B: Einschalten zum Zeitpunkt $n$, dann müsste gelten: $h[n]=0\;\;\forall n<0$.
+                    Das ist aber nicht erfüllt, siehe Plot.$\;\Rightarrow\;$\fbox{Akausal}
+                \item Stabilität,
+                    \begin{definition}[Stabilität]:\\
+                        Ein System heißt stabil, wenn es auf ein
+                        amplitudenbegrenztes Eingangssignal mit einem
+                        amplitudenbegrenzten Ausgangssignal antwortet.
+                        (BIBO...Bounded Input - Bounded Output)
+
+                        Für zeitdiskrete LTI-Systeme gilt:
+                        \[\sum_{k=-\infty}^\infty\left|h[k]\right|<\infty\]
+                        $\Rightarrow$ Systeme mit endlich langer Impulsantwort sind immer stabil.
+
+                        Wobei $h[n]$ die Impulsantwort darstellt.
+                    \end{definition}
+                    Da die Impulsantwort folgende ist: (Berechnung und Plot, siehe \fref{item:impulsantwort})
+                    \[h[n]=\delta[n-2]+\delta[n]+\delta[n+2]\]
+                    folgt:
+                    \[\sum_{k=-\infty}^\infty |h[k]|=\sum_{k=-\infty}^\infty\underbrace{\delta[k-2]}_{=1\text{ für }k=2}+\underbrace{\delta[k]}_{=1\text{ für }k=0}+\underbrace{\delta[k+2]}_{=1\text{ für }k=-2}=3<\infty\;\Rightarrow\;\fbox{BIBO-stab.}\]
+                \item Zeitinvarianz.
+                    \begin{definition}[Zeitinvarianz]:\\
+                        Bei zeitinvarianten Systemen ändert sich die Form des
+                        Ausgangssignals nicht, wenn das Eingangssignal zu
+                        verschiedenen Zeitpunkten angelegt wird. (Es tritt nur
+                        eine Zeitverschiebung auf)
+                        \[\mathcal{T}\{\delta[n-k]\}=h[n-k]\]
+                        \[\mathcal{T}\{x[n-k]\}=y[n-k]\]
+                    \end{definition}
+                Im folgenden werden wir zuerst $x[n]$ durch $x[n-k]$ ersetzen, 
+                dann werden wir dieses $x[n-k]$ in die Formel von $y[n]$
+                anstatt dem $x[n]$ einsetzen.
+
+                Als nächstes müssen wir in der Formel von $y[n]$ das $n$ durch
+                $n-k$ ersetzen und mit dem obigen Ergebnis vergleichen.
+                 \begin{eqnarray*}
+                     \mathcal{T}\{x[n-k]\}&=&x[n-k-2]+x[n-k]+x[n-k+2]\\
+                    y[n-k]&=&x[n-k-2]+x[n-k]+x[n-k+2]\\
+                    &\Rightarrow&\mathcal{T}\{x[n-k]\}=y[n-k]\;\;\Rightarrow\;\;\fbox{zeitinvariant,
+                 da beide gleich.}
+                \end{eqnarray*}                   
+            \end{enumerate}
+        \item Berechnen und skizzieren der Impulsantwort und der
+            Übertragungsfunktion:
+            \label{item:impulsantwort}
+            \begin{uebsp_theory}
+                Wird am Eingang der Der Dirac-Impuls $\delta[n]$ angelegt,
+                erhält man am Ausgang die Impulsantwort $h[n]$.
+            \end{uebsp_theory}
+            Um die Impulsantwort zu berechnen, ersetzen wir in der bereits
+            vereinfachten Formel das Eingangssignal $x[n]$ durch den Impuls 
+            $\delta[n]$:
+            \[y[n]=x[n-2]+x[n]+x[n+2]\;\;\Rightarrow\;\;
+                h[n]=\delta[n-2]+\delta[n]+\delta[n+2]\]
+            \begin{center}
+                \begin{tikzpicture}
+                    \begin{axis}[%
+                        big,
+                        legend style={at={(1,1.12), anchor=north west}},
+                        xlabel={$n$},
+                        ylabel={$h[n]$}]
+                        \addplot+[domain=-4:-1,ycomb,black,thick,mark=*,samples=4]
+                        {0};
+                        \addlegendentry[align=left]{$h[n]=\delta[n-2]+\delta[n]+\delta[n+2]$};
+                        \addplot+[ycomb,black,thick,mark=*,forget plot,samples
+                            at={-2,0,2}] {1};
+                        \addplot+[ycomb,black,thick,mark=*,forget plot,samples
+                            at={-6,...,-3,-1,1,3,4,...,6}] {0};
+                    \end{axis}
+                \end{tikzpicture}
+            \end{center}
+            Nun wenden wir uns der Übertragungsfunktion zu:
+            \begin{uebsp_theory}
+                Die Übertragungsfunktion $H(e^{j\theta})$ ist die
+                Fouriertransformierte der Impulsantwort:
+                \[H(e^{j\theta})=\sum_{k=-\infty}^\infty h[k]e^{-j\theta
+                k}=\mathcal{FT}\{h[n]\}\]
+            \end{uebsp_theory}
+            Wir setzen somit die vorher berechnete Impulsantwort $h[n]$ in die
+            Summe ein:
+            \begin{eqnarray*}
+                H(e^{j\theta})&=&\sum_{k=-\infty}^\infty h[k]e^{-j\theta k}\\
+                H(e^{j\theta})&=&\sum_{k=-\infty}^\infty\left(
+                    \underbrace{\delta[n-2]}_{=1\text{ für
+                    }k=2}+\underbrace{\delta[n]}_{=1\text{ für
+                    }k=0}+\underbrace{\delta[n+2]}_{=1\text{ für
+                    }k=-2}\right)e^{-j\theta k}\\
+                H(e^{j\theta})&=&e^{-j\theta -2} + \underbrace{e^{-j\theta
+                    0}}_{=1} + e^{-j\theta
+                    2} = e^{-j\theta 2} + 1 + e^{j\theta 2}
+            \end{eqnarray*}
+            \begin{definition}[Eulersche Formel]
+                \[e^{j\varphi}=\cos(\varphi)+j\cdot\sin(\varphi)\]
+            \end{definition}
+            Mit der eulerschen Formel folgt:
+            \begin{eqnarray*}
+                H(e^{j\theta})&=&e^{-j\theta 2} + 1 + e^{j\theta 2}=
+                    1+\underbrace{\cos(-\theta 2)}_{=\cos(\theta 2)}
+                    +j\underbrace{\sin(-\theta 2)}_{=-\sin(\theta 2)}
+                    +\cos(\theta 2)+j\sin(\theta 2)\\
+                H(e^{j\theta})&=&
+                    1+\cos(\theta 2)-\cancel{j\sin(\theta 2)}+\cos(\theta
+                    2)+\cancel{j\sin(\theta 2)}=1+2\cos(\theta 2)
+            \end{eqnarray*}
+            \begin{center}
+                \begin{tikzpicture}
+                    \begin{axis}[%
+                        big,
+                        legend style={at={(1,1.12), anchor=north west}},
+                        xtick={-6.2831, -3.1416, 0, 3.1416, 6.2831},
+                        xticklabels={$-2\pi$,$-\pi$,$0$,$\pi$,$2\pi$},
+                        xlabel={$n$},
+                        ylabel={$h[n]$}]
+                    \addplot[domain=-3*pi:3*pi, samples=101] {1+2*cos(deg(x))}; 
+                    \legend{$1+2\cos(\theta 2)$}
+                    \end{axis}
+                \end{tikzpicture}
+            \end{center}
+        \item Welches Ausgangssignal liefert das System für $x[n] = (-1)^n\;\;\forall n$?
+            Einsetzen von $(-1)^n$ für $x[n]$ in die vereinfachte Formel:
+            \[y[n]=x[n-2]+x[n]+x[n+2]=(-1)^{n-2}+(-1)^n+(-1)^{n+2}\]
+            Man kann $(-1)^{n}$ auch als cos darstellen: $\cos(n\pi)=(-1)^n$
+
+            Mit dem cos kann man zeigen, dass gilt: 
+            \[\cos((n+2z)\pi)=\cos(n\pi)\;\;\Rightarrow\;\;(-1)^{n+2z}=(-1)^{n}\;\;\;\;\forall n\in\mathbb{N},\;z\in\mathbb{Z}\]
+            Da gilt: $(-1)^{n+2z}=(-1)^{n}\;\;\forall n\in\mathbb{N},\;\;z\in\mathbb{Z}$ folgt:
+            \[y[n]=(-1)^{n-2}+(-1)^n+(-1)^{n+2}=(-1)^{n}+(-1)^n+(-1)^{n}=3\cdot (-1)^n\]
+ 
+     \item Nun wird das System mit dem Signal $x[n] = \lambda^n$ angeregt.
+        Wie ist $\lambda$ zu wählen, damit $y[n] \equiv 0$ ist?
+             Einsetzen von $\lambda^n$ für $x[n]$ in die vereinfachte Formel:
+            \begin{eqnarray*}
+                y[n]&=&x[n-2]+x[n]+x[n+2]=\lambda^{n-2}+\lambda^n+\lambda^{n+2}=0\\
+                0&=&\lambda^n(\lambda^{-2}+\lambda^0+\lambda^{2})\;\;\Rightarrow\;\;0=\lambda^{-2}+\lambda^0+\lambda^{2}\;\;\fbox{Multiplizieren mit: $\lambda^2$}\\
+                0&=&\lambda^{0}+\lambda^2+\lambda^{4}\;\;\fbox{Subst.: $\lambda^{2x}=\alpha^{x}$}\\
+                0&=&\alpha^{0}+\alpha^1+\alpha^{2}=1+\alpha+\alpha^2
+            \end{eqnarray*}
+            \begin{definition}[Quadratische Lösungsformel]
+                \[x_{1,2}=\frac{-b\pm\sqrt{b^2-4ac}}{2a}\]
+            \end{definition}
+            Eingesetzt in Quadratische Lösungsformel:
+            \begin{eqnarray*}
+                \alpha_{1,2}&=&\frac{-1\pm\sqrt{1^2-4\cdot1\cdot1}}{2\cdot1}=\frac{-1\pm\sqrt{1-4}}{2}=\frac{-1\pm\sqrt{-3}}{2}=\frac{-1}{2}\pm\sqrt{\frac{-3}{4}}\\
+                \alpha_{1,2}&=&\frac{-1}{2}\pm j\frac{\sqrt3}{2}\;\;\fbox{Rücksubst: $\alpha^{x}=\lambda^{\frac{x}{2}}=\sqrt{\lambda^x}$}\\
+                \lambda_{1,2,3,4}&=&\sqrt{\frac{-1}{2}\pm j\frac{\sqrt3}{2}}\\
+            \end{eqnarray*}
+        \item Geben Sie eine Realisierung des Systems an.
+            Hier haben wir ein Problem: ein reales System kann nur kausal sein, wir haben hier aber ein akausales System: $\Rightarrow$ $h[n]$ muss um 2 Zeiteinheiten verzögert werden und wir erhalten als neue Gleichung:
+            \[y[n]=x[n]+x[n-2]+x[n-4]\]
+         \begin{center}
+        \begin{tikzpicture}
+            \matrix[row sep=0.5cm, column sep=0.5cm] {
+                &\node (splita) [point]{};&
+                \node (2Ta) [block] {$2T$};&
+                \node (splitb) [point]{};&
+                \node (2Tb) [block] {$2T$};&
+                \node (splitc) [point]{};&\\
+                \node (input) {};&
+                \node (splitd) [point]{};&&
+                \node (suma) [sum] {$+$};&&
+                \node (sumb) [sum] {$+$};&
+                \node (output) {};\\
+            };
+            \draw [draw,->] (input)node[above] {$x[n]$} -- (splitd);
+            \draw [draw,->] (splita) -- (2Ta);
+            \draw [draw,->] (2Ta) -- (splitb);
+            \draw [draw,->] (splitb) -- (2Tb);
+            \draw [draw,->] (2Tb) -- (splitc);
+            \draw [draw,->] (splitd) -- (splita);
+            \draw [draw,->] (splitd) -- (suma);
+            \draw [draw,->] (suma) -- (sumb);
+            \draw [draw,->] (splitb) -- (suma);
+            \draw [draw,->] (splitc) -- (sumb);
+            \draw [draw,->] (sumb) --node[above] {$y[n]$} (output);
+        \end{tikzpicture}
+        \end{center}
+   
+    \end{enumerate}
+\end{Answer}
+\end{uebsp}

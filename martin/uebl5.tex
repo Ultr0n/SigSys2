@@ -1,7 +1,7 @@
 \documentclass{scrreprt}
 \usepackage{style}
 
-\subject{2. Übung}
+\subject{5. Übung}
 \title{389.055 Signale und Systeme 2 4.0}
 \author{Byte Unit}
 \uppertitleback{Unter GNU Free Document Lizenz}
@@ -21,13 +21,30 @@
 }
 \makeatother
 
+\tikzstyle{point} = [draw, 
+    fill=black,
+    circle,
+    inner sep=0pt]
+\tikzstyle{block}=[rectangle,
+    thick,
+    minimum height=1cm,
+    minimum width=1.5cm,
+    draw=gray!80,
+    fill=gray!20]    
+\tikzstyle{sum} = [draw, 
+    fill=gray!20,
+    draw=gray!80,
+    circle, 
+    node distance=1cm]
+
+\tikzstyle{input} = [coordinate]
+\tikzstyle{output} = [coordinate]
+
 \setcounter{tocdepth}{5}
 
-\setcounter{chapter}{1}
+\setcounter{chapter}{4}
 \begin{document}
 \chapter{Übung}
-\input{uebung_2/bsp_1_4.tex}
-\input{uebung_2/bsp_1_5.tex}
-\input{uebung_2/bsp_1_6.tex}
-\input{uebung_2/bsp_1_7.tex}
+%\input{uebung_5/bsp_3_1.tex}
+\input{uebung_5/bsp_3_2.tex}
 \end{document}

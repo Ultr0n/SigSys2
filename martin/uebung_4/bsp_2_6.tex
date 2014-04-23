@@ -1,0 +1,275 @@
+\begin{uebsp}
+\begin{Exercise}
+Ein System sei als Kettenschaltung zweier Teilsysteme realisiert. Das erste
+Teilsystem ist durch die Eingangs/Ausgangsbeziehung
+\[z[n]=\sum_{k=n-N+1}^nx[k]=\sum_{k=-\infty}^\infty h_1[n-k]x[k]\]
+charakterisiert. Vom zweiten System ist die Impulsantwort bekannt:
+\[h_2[n]=2\sin\frac{\pi}{N}\sin\frac{2\pi n}{N}\sigma[n]\]
+
+\begin{center}
+\begin{tikzpicture}
+    \matrix[row sep=0.5cm, column sep=1cm] {
+        \node (input) {};&
+        \node (h1) [block] {$h_1[n]$};&
+        \node [above] {$z[n]$};&
+        \node (h2) [block] {$h_2[n]$};&
+        \node (output) {};\\
+    };
+    \draw [draw,->] (input) -- node[above] {$x[n]$} (h1);
+    \draw [draw,->] (h1) -- (h2);
+    \draw [draw,->] (h2) -- node[above] {$y[n]$} (output);
+\end{tikzpicture}
+\end{center}
+
+\begin{enumerate}[a)]
+    \item Berechnen und skizzieren Sie:
+        \begin{enumerate}
+            \item die Impulsantwort $h_1[n]$ des ersten Teilsystems,
+            \item die Impulsantwort $h[n]$ des Gesamtsystems,
+        \end{enumerate}
+    \item Berechnen Sie die Antwort $y[n]$ des Gesamtsystems auf das
+    Eingangssignal $x[n] = \sin\frac{2\pi n}{N}, -\infty < n < \infty$.
+    \item Vertauschen Sie jetzt die Reihenfolge der beiden Teilsysteme und
+    wiederholen Sie Punkt b: Warum erhält man dabei ein anderes Ergebnis, 
+    obwohl doch beide Teilsysteme LTI–Systeme sind und die Faltungsoperation 
+    normalerweise assoziativ ist?
+\end{enumerate}
+\end{Exercise}
+\begin{Answer}
+\begin{enumerate}[a)]
+    \item Berechnen und skizzieren Sie:\\
+        \begin{enumerate}
+            \item die Impulsantwort $h_1[n]$ des ersten Teilsystems,
+                \begin{eqnarray*}
+                    z[n]&=&\sum_{k=n-N+1}^n x[k]\\
+                \end{eqnarray*}
+                Will man aus einer Summe mit Grenzen eine unendliche Summe erzeugen, die
+                mit den Sprungfunktionen $\sigma$ arbeitet, berechnet man anhand der
+                Grenzen der Summe die Argumente der $\sigma$-Funktion:
+
+                Die untere Grenze lautet: $k=n-N+1$, d.h. wir brauchen folgende
+                Funktion: 
+                \[f[k]=\begin{cases}1&k\geq n-N+1\\0&\text{
+                    sonst}\end{cases}\;\;\Rightarrow\;\;\sigma[k-n+N-1]\]
+
+                Die obere Grenze lautet: $k=n$, d.h. wir brauchen folgende
+                Funktion:
+                \[f[k]=\begin{cases}1&k\leq n\\0&\text{
+                    sonst}\end{cases}\;\;\Rightarrow\;\;\sigma[-k+n]\]
+
+                $k-n$ das Argument der $\sigma$-Funktion:
+                $\sigma[k-n]$.
+
+                Anschließend müssen wir nur noch beide Grenzen miteinander
+                multiplizieren:
+
+                \begin{eqnarray*}
+                    z[n]&=&\sum_{k=n-N+1}^nx[k]=
+                        \sum_{k=-\infty}^\infty(\sigma[n-k]\cdot\sigma[-n+N-1+k])x[k]\\
+                \end{eqnarray*}
+
+                \begin{uebsp_theory}
+                    Wird am Eingang der Dirac-Impuls $\delta[n]$ angelegt,
+                    erhält man am Ausgang die Impulsantwort $h[n]$.
+                \end{uebsp_theory}
+
+                Um die Impulsantwort zu berechnen, ersetzen wir in der
+                Eingangs-/Ausgangsbeziehung das $x[n]$ durch $\delta[n]$:
+                \begin{eqnarray*}
+                    h_1[n]&=&\sum_{k=-\infty}^\infty(\sigma[-n+N-1+k]\cdot\sigma[n-k])
+                        \underbrace{\delta[k]}_{=1\text{ für }k=0}\\
+                    h_1[n]&=&\sigma[-n+N-1]\cdot \sigma[n]
+                \end{eqnarray*}
+                Somit brauchen wir eine Fallunterscheidung: Dazu zerlegen wir
+                die Funktion $h_1$:
+
+                $\sigma[n]=1\text{ für }n\geq0$ und \\
+                $\sigma[-n+N-1]=1\text{ für }n\leq N-1$.\\
+                Somit gilt:
+                \[h_1[n]=\begin{cases}1&\forall (n)\in [0,N-1]\\0&\text{sonst}\end{cases}\]
+                Und wir können $h_1[n]$ auch schreiben, als
+                \[h_1[n]=\sigma[n]-\sigma[n-(N-1)]=\sigma[n]-\sigma[n-N+1]\]
+            \item die Impulsantwort $h[n]$ des Gesamtsystems,
+                \begin{uebsp_theory}
+                    Bei der Kettenschaltung (Kaskadenschaltung (Reihenschaltung)) 2-er 
+                    stabiler LTI-Systeme mit Impulsantworten $h_1[n]$ und $h_2[n]$ folgt:
+                    \[h[n]=\sum_{k=-\infty}^\infty h_1[k]h_2[n-k]=\sum_{k=-\infty}^\infty h_1[n-k]h_2[k]\]
+                    $\Rightarrow$ Es ist die Reihenfolge der Systeme egal:
+                    \begin{center}
+                    \begin{tikzpicture}
+                        \matrix[row sep=0.5cm, column sep=0.3cm] {
+                            \node (inputa) {};&
+                            \node (h1a) [block] {$h_1[n]$};&
+                            \node (h2a) [block] {$h_2[n]$};&
+                            \node (outputa) {};&
+                            \node (equa) {=};&
+                            \node (inputb) {};&
+                            \node (h1b) [block] {$h_1[n]$};&
+                            \node (h2b) [block] {$h_2[n]$};&
+                            \node (outputb) {};&
+                            \node (equa) {=};&
+                            \node (inputc) {};&
+                            \node (h) [block] {$h[n]$};&
+                            \node (outputc) {};\\
+                        };
+                        \draw [draw,->] (inputa) -- (h1a);
+                        \draw [draw,->] (h1a) -- (h2a);
+                        \draw [draw,->] (h2a) -- (outputa);
+                        \draw [draw,->] (inputb) -- (h1b);
+                        \draw [draw,->] (h1b) -- (h2b);
+                        \draw [draw,->] (h2b) -- (outputb);
+                        \draw [draw,->] (inputc) -- (h);
+                        \draw [draw,->] (h) -- (outputc);
+
+                    \end{tikzpicture}
+                \end{center}
+                \end{uebsp_theory}
+                Somit können wir die Impulsantwort des Gesamtsystems wie folgt
+                berechnen:
+                \begin{eqnarray*}
+                    h[n]&=&\sum_{k=-\infty}^\infty h_1[k]h_2[n-k] = \sum_{k=-\infty}^\infty h_1[n-k]h_2[k]\\
+                    h[n]&=&\sum_{k=-\infty}^\infty
+                        (\sigma[n-k]-\sigma[n-k-N+1])2\sin\frac{\pi}{N}\sin\frac{2\pi
+                        k}{N}\sigma[k]\\
+                    h[n]&=&\sum_{k=-\infty}^\infty
+                        2\sin\frac{\pi}{N}\sin\frac{2\pi
+                        k}{N}(\sigma[n-k]-\sigma[n-k-N+1])\underbrace{\sigma[k]}_{=1\text{
+                        für }k\geq 0}\\
+                        &\Rightarrow&\fbox{Somit ist ersichtlich, dass $h[n]=0$ für
+                            $k<0$}\\
+                    h[n]&=&\sum_{k=0}^\infty
+                        2\sin\frac{\pi}{N}\sin\frac{2\pi
+                        k}{N}(\sigma[n-k]-\sigma[n-k-N+1])\underbrace{\cancel{\sigma[k]}}_{=1\text{
+                        für }k\geq 0}\\
+                    h[n]&=&\sum_{k=0}^\infty
+                        2\sin\frac{\pi}{N}\sin\frac{2\pi
+                        k}{N}\underbrace{\sigma[n-k]}_{=1\text{ für }k\leq n}-\sum_{k=0}^\infty
+                        2\sin\frac{\pi}{N}\sin\frac{2\pi
+                        k}{N}\underbrace{\sigma[n-k-N+1]}_{=1\text{ für }k\leq
+                        n-N+1}\\
+                    h[n]&=&\sum_{k=0}^n
+                        2\sin\frac{\pi}{N}\sin\frac{2\pi
+                        k}{N}
+                        -\sum_{k=0}^{n-N+1}
+                        2\sin\frac{\pi}{N}\sin\frac{2\pi
+                        k}{N}\\
+                        h[n]&=&2\sin\frac{\pi}{N}\left(\sum_{k=0}^n
+                        \sin\frac{2\pi
+                        k}{N}
+                        -\sum_{k=0}^{n-N+1}
+                        \sin\frac{2\pi
+                        k}{N}\right)
+                \end{eqnarray*}
+                \begin{definition}[Eulersche Formel]
+                    \[e^{j\,\varphi} = \cos\left(\varphi
+                    \right) + j\,\sin\left( \varphi\right).\]
+                    Außerdem gilt:
+                    \[\sin x=\frac{e^{jx}-e^{-jx}}{2j}\;\;\text{ bzw.
+                    }\;\;\cos x=\frac{e^{jx}+e^{-jx}}{2}\]
+                \end{definition}
+                Wir ziehen nun beide Summen aus der Gleichung raus: 
+                \[\sum_{k=0}^n\sin\frac{2\pi k}{N}=
+                    \sum_{k=0}^n\frac{e^{j\frac{2\pi k}{N}}-e^{-j\frac{2\pi k}{N}}}{2j}=
+                    \frac{1}{2j}\left(\sum_{k=0}^n
+                e^{j\frac{2\pi k}{N}}-\sum_{k=0}^ne^{-j\frac{2\pi k}{N}}\right)\]
+                \[\sum_{k=0}^{n-N+1}\sin\frac{2\pi k}{N}=
+                    \sum_{k=0}^{n-N+1}\frac{e^{j\frac{2\pi k}{N}}-e^{-j\frac{2\pi k}{N}}}{2j}=
+                    \frac{1}{2j}\left(\sum_{k=0}^{n-N+1}
+                e^{j\frac{2\pi k}{N}}-\sum_{k=0}^{n-N+1}e^{-j\frac{2\pi k}{N}}\right)\]
+                \begin{definition}[Geometrische Reihe]
+                    \[\sum_{n=0}^\infty a^n=\frac{1}{1-a}\;\;\forall
+                        |a|<1\;\;\;\;\text{ und }\;\;\;\;
+                        \sum_{n=0}^{N-1} a^n=\begin{cases}N&a=1\\
+                            \frac{1-a^N}{1-a}&\text{sonst }\forall N\geq0\end{cases}\]
+                \end{definition}
+                Mit der Geometrischen Reihe erhalten wir:
+                \begin{eqnarray*}
+                    \sum_{k=0}^n\sin\frac{2\pi k}{N}&=&\frac{1}{2j}\left(\sum_{k=0}^n
+                    e^{j\frac{2\pi k}{N}}-\sum_{k=0}^ne^{-j\frac{2\pi
+                    k}{N}}\right)=
+                    \frac{1}{2j}\left(\sum_{k=0}^{j\frac{2\pi n}{N}}
+                    e^{k}-\sum_{k=0}^{-j\frac{2\pi n}{N}}e^k\right)\\
+                    &=&\frac{1}{2j}\left(\frac{1-e^{j\frac{2\pi
+                    (n+1)}{N}}}{1-e^{j\frac{2\pi
+                    (1)}{N}}}-\frac{1-e^{-j\frac{2\pi
+                    (n+1)}{N}}}{1-e^{-j\frac{2\pi
+                    (1)}{N}}}\right)
+                \end{eqnarray*}
+                \begin{eqnarray*}\sum_{k=0}^{n-N+1}\sin\frac{2\pi k}{N}&=&
+                    \frac{1}{2j}\left(\sum_{k=0}^{n-N+1}
+                    e^{j\frac{2\pi k}{N}}-\sum_{k=0}^{n-N+1}e^{-j\frac{2\pi
+                    k}{N}}\right)\\
+                    &=&\frac{1}{2j}\left(\sum_{k=0}^{j\frac{2\pi (n-N+1)}{N}}
+                    e^{k}-\sum_{k=0}^{-j\frac{2\pi (n-N+1)}{N}}e^k\right)\\
+                    &=&\frac{1}{2j}\left(\sum_{k=0}^{j\frac{2\pi (n-N+1)}{N}}
+                    e^{k}-\sum_{k=0}^{-j\frac{2\pi (n-N+1)}{N}}e^k\right)\\
+                    &=&\frac{1}{2j}\left(\frac{1-e^{j\frac{2\pi
+                    (n+2)}{N}}}{1-e^{j\frac{2\pi
+                    (1)}{N}}}-\frac{1-e^{-j\frac{2\pi
+                    (n+2)}{N}}}{1-e^{-j\frac{2\pi
+                    (1)}{N}}}\right)
+                \end{eqnarray*}
+
+                \begin{eqnarray*}
+                        h[n]&=&2\sin\frac{\pi}{N}\left(\sum_{k=0}^n
+                        \sin\frac{2\pi
+                        k}{N}
+                        -\sum_{k=0}^{n-N+1}
+                        \sin\frac{2\pi
+                        k}{N}\right)\\
+                        h[n]&=&2\sin\frac{\pi}{N}\left(
+                        \frac{1}{2j}\left(\frac{1-e^{j\frac{2\pi
+                            (n+1)}{N}}}{1-e^{j\frac{2\pi
+                            (1)}{N}}}-\frac{1-e^{-j\frac{2\pi
+                            (n+1)}{N}}}{1-e^{-j\frac{2\pi
+                            (1)}{N}}}\right)
+                        -\frac{1}{2j}\left(\frac{1-e^{j\frac{2\pi
+                            (n+2)}{N}}}{1-e^{j\frac{2\pi
+                            (1)}{N}}}-\frac{1-e^{-j\frac{2\pi
+                            (n+2)}{N}}}{1-e^{-j\frac{2\pi
+                            (1)}{N}}}\right)\right)\\
+                            &\Rightarrow&\fbox{Mit \href{http://www.wolframalpha.com/input/?i=simplify+\%28\%281-e^\%28i+2+pi+\%28n\%2B1\%29\%2FN\%29\%29\%2F\%281-e^\%28i+2+pi\%2FN\%29\%29-\%281-e^\%28-\%28i2+pi+\%28n\%2B1\%29\%2FN\%29\%29\%29\%2F\%281-e^\%28-\%28i+2+pi\%2FN\%29\%29\%29\%29}{Wolfram Alpha}
+                            folgt:}\\
+                            h[n]&=&2\sin\frac{\pi}{N}\left(\frac{1}{\cancel{2j}}
+                            \left(\cancel{2j}\csc\left(\frac{\pi}{N}\right)\sin
+                                \left(\frac{\pi
+                                n}{N}\right)\sin\left(\frac{\pi(n+1)}{N}\right)\right)-
+                                \frac{1}{\cancel{2j}}
+                                \left(\cancel{2j}\csc\left(\frac{\pi}{N}\right)\sin
+                                \left(\frac{\pi
+                                (n+1)}{N}\right)\sin\left(\frac{\pi(n+2)}{N}\right)\right)\right)\\
+                            h[n]&=&2\sin\frac{\pi}{N}\left(
+                                \left(\csc\left(\frac{\pi}{N}\right)\sin
+                                \left(\frac{\pi
+                                n}{N}\right)\sin\left(\frac{\pi(n+1)}{N}\right)\right)-
+                                \left(\csc\left(\frac{\pi}{N}\right)\sin
+                                \left(\frac{\pi
+                                (n+1)}{N}\right)\sin\left(\frac{\pi(n+2)}{N}\right)\right)\right)\\
+                            &\Rightarrow&\fbox{Mit $\csc(x)=\frac{1}{sin(x)}$
+                            folgt:}\\
+                            h[n]&=&2\cancel{\sin\frac{\pi}{N}}\left(
+                                \left(\frac{1}{\cancel{sin\left(\frac{\pi}{N}\right)}}\sin
+                                \left(\frac{\pi
+                                n}{N}\right)\sin\left(\frac{\pi(n+1)}{N}\right)\right)-
+                                \left(\frac{1}{\cancel{sin\left(\frac{\pi}{N}\right)}}\sin
+                                \left(\frac{\pi
+                                (n+1)}{N}\right)\sin\left(\frac{\pi(n+2)}{N}\right)\right)\right)\\
+                            h[n]&=&2\left(
+                                \left(\sin
+                                \left(\frac{\pi
+                                n}{N}\right)\sin\left(\frac{\pi(n+1)}{N}\right)\right)-
+                                \left(\sin
+                                \left(\frac{\pi
+                                (n+1)}{N}\right)\sin\left(\frac{\pi(n+2)}{N}\right)\right)\right)\\
+                \end{eqnarray*}
+                %here helps wa out: simplify ((1-e^(i 2 pi (n+1)/N))/(1-e^(i 2 pi/N))-(1-e^(-(i2 pi (n+1)/N)))/(1-e^(-(i 2 pi/N))))
+        \end{enumerate}
+    \item Berechnen Sie die Antwort $y[n]$ des Gesamtsystems auf das
+    Eingangssignal $x[n] = \sin\frac{2\pi n}{N}, -\infty < n < \infty$.
+    \item Vertauschen Sie jetzt die Reihenfolge der beiden Teilsysteme und
+    wiederholen Sie Punkt b: Warum erhält man dabei ein anderes Ergebnis, 
+    obwohl doch beide Teilsysteme LTI–Systeme sind und die Faltungsoperation 
+    normalerweise assoziativ ist?
+\end{enumerate}
+\end{Answer}
+\end{uebsp}
