@@ -3,7 +3,7 @@
 	Ein lineares, zeitinvariantes System (LTI-System) habe eine Impulsantwort $h[n]=\alpha ^n \sigma [n]$. Berechnen Sie die Systemantworten $y[n]$ auf folgende Eingangssignale:
 	\begin{enumerate}[a)]
 		\item $x[n]=\sigma [n]$
-		\item $x[n]=\sigma [-n]$
+		\item $x[n]=\sigma [-n], \quad |\alpha|<1$
 		\item $x[n]=\sigma [n]+\sigma [-n+N]-1$
 		\item $x[n]=\sigma [n+N]\sigma [-n+N]$
 		\item $x[n]=\beta ^n \sigma [n]$, auch für $\beta = \alpha, \quad |\alpha|<1, |\beta| < 1$
@@ -43,13 +43,62 @@
 			Da die Impulsantwort $\alpha ^n$ enthält, und ich $\alpha ^{n-k}$ vermeiden möchte, wähle ich die zweite Variante.
 			\begin{align*}
 				y[n]	&= \sum_{k=-\infty}^{\infty}x[n-k]h[k] \\
-						&= \sum_{k=-\infty}^{\infty}\sigma [n-k] \alpha ^k \underbrace{\sigma [k]}_{0 \text{ für } k<0} \\
-						&= \sum_{k=0}^{\infty}\underbrace{\sigma [n-k]}_{>0 \text{ für } n \ge k} \alpha ^k \\
-						&= \sum_{k=0}^{n} \alpha ^k = \left\{ \begin{array}{ll} n\sigma [n] & \alpha=1\\ \frac{1-\alpha^{n+1}}{1-\alpha}\sigma [n] & sonst \end{array} \right.
+						&= \sum_{k=-\infty}^{\infty}\sigma [n-k] \alpha^k \underbrace{\sigma [k]}_{0 \text{ für } k<0} \\
+						&= \sum_{k=0}^{\infty}\underbrace{\sigma [n-k]}_{>0 \text{ für } n \ge k} \alpha^k \\
+						&= \sum_{k=0}^{n} \alpha^k = \left\{ \begin{array}{ll} n\sigma [n] & \alpha=1\\ \frac{1-\alpha^{n+1}}{1-\alpha}\sigma [n] & sonst \end{array} \right.
 			\end{align*}
 			Das $\sigma [n]$ kommt daher, dass das Eingangssignal nur für positive n Werte definiert ist.
-		\item $x[n]=\sigma [-n]$
+		\item $x[n]=\sigma [-n], \quad |\alpha|<1$ \\
+			Ich wähle dieses mal die erste Variante:
+			\begin{align*}
+				y[n]	&= \sum_{k=-\infty}^{\infty}x[k]h[n-k] \\
+						&= \sum_{k=-\infty}^{\infty}\underbrace{\sigma [-k]}_{>0 \text{ für } k \le 0} \alpha ^{n-k} \sigma [n-k] \\
+						&= \sum_{k=-\infty}^{0}\alpha^{n-k} \sigma [n-k] \\
+						&= \sum_{k=0}^{\infty}\alpha^{n+k} \sigma [n+k]
+			\end{align*}
+			Wir unterscheiden nun die zwei Fälle $n<0$ und $n \ge 0$. Für $n \ge 0$ gilt:
+			\begin{align*}
+				y[n]	&= \sum_{k=0}^{\infty}\alpha^{n+k} \underbrace{\sigma [n+k]}_{=1} \\
+						&= \alpha ^n \sum_{k=0}^{\infty}\alpha^{k} \\
+						&= \frac{\alpha ^n}{1-\alpha}
+			\end{align*}
+			Für $n<0$ wird $y[n]$:
+			\begin{align*}
+				y[n]	&= \sum_{k=0}^{\infty}\alpha^{n+k} \underbrace{\sigma [n+k]}_{=1 \text{ für } k \ge -n} \\
+						&= \sum_{k=-n}^{\infty}\alpha^{n+k} \\
+						&= \sum_{k=0}^{\infty}\alpha^{n+k} - \sum_{k=0}^{-n-1}\alpha^{n+k} \\
+						&= \frac{\alpha ^n}{1-\alpha} - \alpha ^n \frac{1-\alpha ^{-n}}{1-\alpha} \\
+						&= \frac{\alpha ^n}{1-\alpha} - \frac{\alpha ^n -1}{1-\alpha} = \frac{1}{1-\alpha} 
+			\end{align*}
 		\item $x[n]=\sigma [n]+\sigma [-n+N]-1$
+			\begin{align*}
+				y[n]	&= \sum_{k=-\infty}^{\infty}x[n-k]h[k] \\
+						&= \sum_{k=-\infty}^{\infty}\sigma[n-k]\alpha^k \underbrace{\sigma[k]}_{1 \text{ für } k\ge 0}+ \sum_{k=-\infty}^{\infty}\sigma[-n+k+N]\alpha^k \underbrace{\sigma[k]}_{1 \text{ für } k\ge 0} - \sum_{k=-\infty}^{\infty}\alpha^k \underbrace{\sigma[k]}_{1 \text{ für } k\ge 0} \\
+						&= \sum_{k=0}^{\infty}\sigma[n-k]\alpha^k + \sum_{k=0}^{\infty}\sigma[-n+k+N]\alpha^k - \sum_{k=0}^{\infty}\alpha^k
+			\end{align*}
+			Wir benötigen erneut die Fallunterscheidung $n<0$ und $n\ge 0$. Für $n\ge 0$ gilt:
+			\begin{align*}
+				y[n]	&= \sum_{k=0}^{\infty}\underbrace{\sigma[n-k]}_{1 \text{ für } k\le n}\alpha^k + \sum_{k=0}^{\infty}\underbrace{\sigma[-n+k+N]}_{1 \text{ für } k\ge n-N}\alpha^k - \sum_{k=0}^{\infty}\alpha^k \\
+						&= \sum_{k=0}^{n}\alpha^k + \sum_{k=n-N}^{\infty}\alpha^k - \sum_{k=0}^{\infty}\alpha^k \\
+						&= \frac{1-\alpha ^{n+1}}{1-\alpha} + \sum_{k=0}^{\infty}\alpha^k -  \sum_{k=0}^{n-N-1}\alpha^k - \sum_{k=0}^{\infty}\alpha^k \\
+						&= \frac{1-\alpha ^{n+1}}{1-\alpha} - \frac{1-\alpha^{n-N}}{1-\alpha}
+			\end{align*}
+			Für den Fall $n<0$ erhalten wir:
+			\begin{align*}
+				y[n]	&= \sum_{k=0}^{\infty}\underbrace{\sigma[n-k]}_{=0}\alpha^k + \sum_{k=0}^{\infty}\underbrace{\sigma[-n+k+N]}_{=1}\alpha^k - \sum_{k=0}^{\infty}\alpha^k \\
+						&= \sum_{k=0}^{\infty}\alpha^k - \sum_{k=0}^{\infty}\alpha^k = 0
+			\end{align*}
+			Nur für positive $n$ wird auch ein Ausgang erzeugt. Schlussendlich müssen wir nur noch die  Ausgangskomponenten auf die Eingangskomponenten beschränken. $\frac{1-\alpha ^{n+1}}{1-\alpha} $ gilt nur für $n\ge 0$ und $\frac{1-\alpha^{n-N}}{1-\alpha}$ nur für $n\le N$.
+			\[
+				y[n]	= \frac{1-\alpha ^{n+1}}{1-\alpha}\sigma[n]-\frac{1-\alpha^{n-N}}{1-\alpha}\sigma[-n+N]
+			\]
+			\textbf{Achtung! Die eigentliche Lösung lautet $\frac{1-\alpha ^{n+1}}{1-\alpha}\sigma[n]-\frac{1-\alpha^{n-N}}{1-\alpha}\sigma[n-N-1]$. Wieso ist das so?}
 		\item $x[n]=\sigma [n+N]\sigma [-n+N]$
+			\begin{align*}
+				y[n]	&= \sum_{k=-\infty}^{\infty}x[n-k]h[k] \\
+						&= \sum_{k=-\infty}^{\infty}\underbrace{\sigma[n-k+N]}_{1 \text{ für } k\le n+N}\underbrace{\sigma[-n+k+N]}_{1 \text{ für } k\ge N-n} \alpha^{k}\underbrace{\sigma[k]}_{1 \text{ für } k\ge 0} \\
+						&= \sum_{k=0}^{n+N} \alpha^{k} = \frac{1-\alpha^{n+N+1}}{1-\alpha}
+			\end{align*}
+			\textbf{Achtung! Die richtige Lösung ist\\ $\frac{1}{1-\alpha}((1-\alpha^{n+1+N})\sigma[n+N]-(1-\alpha^{n-N})\sigma[n-N-1])$}
 		\item $x[n]=\beta ^n \sigma [n]$, auch für $\beta = \alpha, \quad |\alpha|<1, |\beta| < 1$
 	\end{enumerate}
