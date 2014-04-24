@@ -40,7 +40,6 @@
 			\[
 				y[n] = \sum_{k=-\infty}^{\infty}x[k]h[n-k]=\sum_{k=-\infty}^{\infty}x[n-k]h[k]
 			\]
-			Da die Impulsantwort $\alpha ^n$ enthält, und ich $\alpha ^{n-k}$ vermeiden möchte, wähle ich die zweite Variante.
 			\begin{align*}
 				y[n]	&= \sum_{k=-\infty}^{\infty}x[n-k]h[k] \\
 						&= \sum_{k=-\infty}^{\infty}\sigma [n-k] \alpha^k \underbrace{\sigma [k]}_{0 \text{ für } k<0} \\
@@ -101,4 +100,15 @@
 			\end{align*}
 			\textbf{Achtung! Die richtige Lösung ist\\ $\frac{1}{1-\alpha}((1-\alpha^{n+1+N})\sigma[n+N]-(1-\alpha^{n-N})\sigma[n-N-1])$}
 		\item $x[n]=\beta ^n \sigma [n]$, auch für $\beta = \alpha, \quad |\alpha|<1, |\beta| < 1$
+			\begin{align*}
+				y[n]	&= \sum_{k=-\infty}^{\infty} \beta^k \underbrace{\sigma[k]}_{1 \text{ für } k\ge 0}\alpha^{n-k} \underbrace{\sigma[n-k]}_{1 \text{ für } k \le n} \\
+						&= \alpha^n \sum_{k=0}^{n} \beta^k \alpha^{-k} \\
+						&= \alpha^n \frac{\alpha-\alpha^{-n}b^{n+1}}{\alpha-\beta}\sigma[n] \\
+						&= \frac{\alpha^{n+1}-\beta^{n+1}}{\alpha-\beta}\sigma[n] = \frac{\beta^{n+1}-\alpha^{n+1}}{\beta-\alpha}\sigma[n]
+			\end{align*}
+			Für den Fall $\beta = \alpha$ erhalten wir:
+			\begin{align*}
+				y[n]	&=  \sum_{k=-\infty}^{\infty} \alpha^k \underbrace{\sigma[k]}_{1 \text{ für } k\ge 0}\alpha^{n-k} \underbrace{\sigma[n-k]}_{1 \text{ für } k \le n} \\
+						&= \alpha^n \sum_{k=0}^{n}1 = \alpha^n (n+1) \sigma[n]
+			\end{align*}
 	\end{enumerate}
